@@ -16,6 +16,7 @@
 #include "project.h"
 #include "settings.h"
 #include "video_player.h"
+#include "desktop_env.h"
 
 // External declaration — assuming these are defined in a header or elsewhere
 extern void inject_auto_follow_script(WebKitWebView *web_view);
@@ -88,7 +89,15 @@ GtkWidget* create_main_window(WebKitWebView *web_view, UrlBarUserAgent *out_url_
         return NULL;
     }
 
-    gtk_window_set_title(GTK_WINDOW(window), config_get_window_title());
+    {
+        const char *base_title = config_get_window_title();
+        gchar *full_title = g_strdup_printf(
+            "%s - %s",
+            (base_title != NULL && base_title[0] != '\0') ? base_title : PROJECT_NAME,
+            desktop_kind_label(desktop_kind_live()));
+        gtk_window_set_title(GTK_WINDOW(window), full_title);
+        g_free(full_title);
+    }
     gtk_window_set_default_size(GTK_WINDOW(window), 
                                 config_get_default_width(), 
                                 config_get_default_height());
@@ -119,6 +128,17 @@ GtkWidget* create_main_window(WebKitWebView *web_view, UrlBarUserAgent *out_url_
 
     if (config_get_show_user_agent_label()) {
         gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(out_url_bar->ua_label), FALSE, FALSE, 2);
+    }
+
+    {
+        gchar *desktop_text = g_strdup_printf("Desktop: %s", desktop_kind_label(desktop_kind_live()));
+        GtkWidget *desktop_label = gtk_label_new(desktop_text);
+        gtk_label_set_xalign(GTK_LABEL(desktop_label), 0.0f);
+        gtk_widget_set_margin_start(desktop_label, 8);
+        gtk_widget_set_margin_end(desktop_label, 8);
+        gtk_widget_set_margin_bottom(desktop_label, 4);
+        gtk_box_pack_start(GTK_BOX(vbox), desktop_label, FALSE, FALSE, 0);
+        g_free(desktop_text);
     }
 
     VideoPlayer *player = video_player_new(web_view);

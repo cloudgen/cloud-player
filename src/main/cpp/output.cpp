@@ -16,6 +16,7 @@
 #include "log_commands.h"
 #include "log_format.h"
 #include "lua_script_commands.h"
+#include "desktop_env.h"
 #include <glib.h>
 #include <string.h>
 #include <stdlib.h>
@@ -432,7 +433,9 @@ void ciao_output_init(int argc, char **argv)
         ciao_quiet_mode = true;
         if (!ciao_argv_has_log_verb(argc, argv) &&
             !ciao_argv_has_lua_script_verb(argc, argv) &&
-            !ciao_argv_has_logcheck_verb(argc, argv)) {
+            !ciao_argv_has_logcheck_verb(argc, argv) &&
+            !ciao_argv_has_desktop_verb(argc, argv) &&
+            !ciao_argv_has_desktopcheck_verb(argc, argv)) {
             ciao_debug("JSON mode active → quiet mode forced ON");
         }
     }
@@ -454,6 +457,12 @@ void ciao_output_init(int argc, char **argv)
     // log and luascript print their own payload and stop before startup
     // lines and before gtk_init(). requirement-cpp-log-commands.md
     // requirement-cpp-lua-script-commands.md
+    if (ciao_argv_has_desktopcheck_verb(argc, argv)) {
+        ciao_desktopcheck_command_dispatch(argc, argv);
+    }
+    if (ciao_argv_has_desktop_verb(argc, argv)) {
+        ciao_desktop_command_dispatch(argc, argv);
+    }
     if (ciao_argv_has_logcheck_verb(argc, argv)) {
         ciao_logcheck_command_dispatch(argc, argv);
     }
@@ -738,8 +747,11 @@ void ciao_print_help(void)
     g_print("  luascript list       Number the lua scripts\n");
     g_print("  luascript view N     Display lua script number N\n");
     g_print("  luascript edit N     Replace lua script number N from stdin\n");
-    g_print("  luascript new NAME   Create a lua script\n\n");
+    g_print("  luascript new NAME   Create a lua script\n");
+    g_print("  desktop              Name this desktop: windows, macos, or linux-desktop\n\n");
     g_print("Tests:\n");
+    g_print("  desktopcheck --os windows|macos|linux\n");
+    g_print("                       Name that desktop without reading this process\n");
     g_print("  logcheck --file PATH Check one log file\n");
     g_print("  logcheck --home DIR --log-datestamp YYYYMMDD\n");
     g_print("                       Check that dated file\n");
@@ -774,5 +786,7 @@ void ciao_print_help(void)
     g_print("  %s logcheck --home /tmp --log-datestamp 20261003\n", PROJECT_NAME);
     g_print("  %s luascript folder\n", PROJECT_ID);
     g_print("  %s luascript new gemini-note.lua\n", PROJECT_ID);
+    g_print("  %s desktop\n", PROJECT_ID);
+    g_print("  %s desktopcheck --os linux --display :0\n", PROJECT_ID);
 }
 

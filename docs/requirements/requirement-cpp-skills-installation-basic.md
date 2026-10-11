@@ -1,6 +1,6 @@
 **file**: docs/requirements/requirement-cpp-skills-installation-basic.md
 **Status**: Active
-**Updated**: 2026-10-04
+**Updated**: 2026-10-11
 **Philosophy**: CIAO v2.10.2 / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
 
 ## 1. Purpose
@@ -45,7 +45,7 @@ This file owns the simple GCC build, which is the primary way to compile gemini-
 
 `build` compiles every `src/main/cpp/*.cpp` with `g++ -std=c++17`. A `src/main/cpp/*.c` file is compiled with `gcc -std=c11`. The compile adds `-I/usr/local/include` for `<sol/sol.hpp>`. The link line is `g++` when any `.cpp` file is present, and `gcc` when the directory contains only `.c` files.
 
-The output path is `${BUILD_DEBUG}/${PRJ}`. With the current `project.ini` that is `target/exe/debug/gemini-wilgat`.
+The output path is `${BUILD_DEBUG}/${PRJ}`. With the current `project.ini` that is `target/exe/debug/gemini-wilgat`. Object files go under `target/exe/debug/obj/`. libmpv is linked from `third_party/libmpv/usr/lib/` plus the host multiarch name from `gcc -print-multiarch`. Sourcing `project.sh` exports paths and does not install packages. Running `project.sh` as a program does.
 
 `install` may call `sudo apt` for host packages. The package names are the apt set in `requirement-cpp-dependencies.md`. The gemini-wilgat window does not call `sudo`.
 

@@ -1,6 +1,6 @@
 **file**: docs/requirements/requirement-cpp-dependencies.md
 **Status**: Active
-**Updated**: 2026-10-04
+**Updated**: 2026-10-11
 **Philosophy**: CIAO v2.10.2 / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
 
 ## 1. Purpose
@@ -32,7 +32,7 @@ This file owns the libraries the gemini-wilgat C++ program compiles and links ag
 
 ## 2. Core rules
 
-The link set is exactly these modules. `./build.sh build` passes them to `pkg-config --cflags --libs`. `meson.build` declares each one with `dependency()`, `required: true`.
+The pkg-config modules are exactly these. `./build.sh build` passes them to `pkg-config --cflags --libs`. `meson.build` declares each one with `dependency()`, `required: true`. libepoxy, EGL, libmpv, and libdl are linked as well. libmpv is not requested from pkg-config.
 
 | Library | pkg-config / Meson name | Apt package |
 |---------|-------------------------|-------------|
@@ -45,8 +45,12 @@ The link set is exactly these modules. `./build.sh build` passes them to `pkg-co
 | Lua 5.3 (`liblua5.3`) | `lua5.3` | `liblua5.3-dev` and `lua5.3` |
 | POSIX threads | Meson name `threads`; the simple link line adds `-pthread` | comes with `build-essential` |
 | sol2 | header `<sol/sol.hpp>` | no apt package; headers under `/usr/local/include/sol` |
+| libepoxy | `epoxy` | `libepoxy-dev` |
+| EGL | `egl` | `libegl1-mesa-dev` |
+| libmpv | not pkg-config; `-lmpv` plus the headers under `third_party/libmpv/usr/include` | `./build.sh` downloads the `libmpv2` and `libmpv-dev` debs into `third_party/libmpv`. The library directory is `usr/lib/` plus the host multiarch name |
+| libdl | `-ldl` | the C library |
 
-`./build.sh install` also installs `build-essential`, `pkg-config`, and `git`. `git` is there so the install step can clone sol2. The clone steps stay in `requirement-cpp-skills-installation-basic.md`. The sol2 API stays in `requirement-cpp-lua-script.md`.
+`./build.sh install` also installs `build-essential`, `pkg-config`, `libgtk-3-dev`, `libepoxy-dev`, `libegl1-mesa-dev`, and `git`. `git` is there so the install step can clone sol2. The clone steps stay in `requirement-cpp-skills-installation-basic.md`. The sol2 API stays in `requirement-cpp-lua-script.md`.
 
 The second build needs `meson` and `ninja-build` on the developer machine. `./build.sh install` does not install those two packages.
 
@@ -84,7 +88,7 @@ The link line appends `-pthread`.
 
 | TP-ID | Pass |
 |-------|------|
-| TP-CPP-DEPENDENCIES | `pkg-config --exists` succeeds for `gtk+-3.0`, `webkit2gtk-4.1`, `glib-2.0`, `gobject-2.0`, `gio-2.0`, `sqlite3`, and `lua5.3`. `build.sh` and `meson.build` both request that set |
+| TP-CPP-DEPENDENCIES | `pkg-config --exists` succeeds for `gtk+-3.0`, `webkit2gtk-4.1`, `glib-2.0`, `gobject-2.0`, `gio-2.0`, `sqlite3`, `lua5.3`, `epoxy`, and `egl`. `build.sh` and `meson.build` both request that set and link libmpv from `third_party/libmpv` |
 
 Map: `docs/reviews/test-plan.md`. Status stays todo until that check is run.
 

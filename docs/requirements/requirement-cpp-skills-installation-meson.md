@@ -1,6 +1,6 @@
 **file**: docs/requirements/requirement-cpp-skills-installation-meson.md
 **Status**: Active
-**Updated**: 2026-10-04
+**Updated**: 2026-10-11
 **Philosophy**: CIAO v2.10.2 / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
 
 ## 1. Purpose
@@ -47,16 +47,21 @@ Current sources:
 - `src/main/cpp/auto_follow.cpp`
 - `src/main/cpp/config.cpp`
 - `src/main/cpp/cookies.cpp`
+- `src/main/cpp/desktop_env.cpp`
 - `src/main/cpp/dialog_about.cpp`
 - `src/main/cpp/dialog_version.cpp`
 - `src/main/cpp/load_page_ogin_check.cpp`
 - `src/main/cpp/login_detector_app.cpp`
 - `src/main/cpp/log_commands.cpp`
+- `src/main/cpp/log_format.cpp`
+- `src/main/cpp/log_view_html.cpp`
+- `src/main/cpp/lua_script_commands.cpp`
 - `src/main/cpp/main.cpp`
 - `src/main/cpp/menu_bookmark.cpp`
 - `src/main/cpp/menu_bookmark_app.cpp`
 - `src/main/cpp/menu_exit.cpp`
 - `src/main/cpp/menu_log.cpp`
+- `src/main/cpp/menu_lua_script.cpp`
 - `src/main/cpp/menu_user_agent.cpp`
 - `src/main/cpp/output.cpp`
 - `src/main/cpp/path_utils.cpp`
@@ -68,8 +73,9 @@ Current sources:
 - `src/main/cpp/url_bar_user_agent.cpp`
 - `src/main/cpp/webkit_setup.cpp`
 - `src/main/cpp/userscript_manager.cpp`
+- `src/main/cpp/video_player.cpp`
 
-The `project()` version is 1.0.7, the same numbers as the `project.h` macros. `project.ini` `VERSION` and the README badge stay 1.0.6 until those two are aligned. Do not invent another version number.
+The `project()` version is 1.0.8, the same numbers as the `project.h` macros and `project.ini` `VERSION`. libmpv is linked from `third_party/libmpv/usr/lib/` plus `gcc -print-multiarch`.
 
 ## 3. Protection rule
 

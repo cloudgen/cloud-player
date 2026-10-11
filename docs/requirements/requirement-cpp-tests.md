@@ -1,6 +1,6 @@
 **file**: docs/requirements/requirement-cpp-tests.md
 **Status**: Active
-**Updated**: 2026-10-06
+**Updated**: 2026-10-11
 **Philosophy**: CIAO v2.10.2 / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
 
 ## 1. Purpose
@@ -54,7 +54,12 @@ Forbidden without an explicit request: isolated unit tests of `auto_follow.cpp`,
 | TP-CPP-DEBUG-VALUES | requirement-cpp-debug-mode | `DEBUG=1` prints userscript `enabled`, `state`, `path`, and each script's `priority` and `match` |
 | TP-CPP-LUA-SOL2 | requirement-cpp-lua-script | The host includes `<sol/sol.hpp>`, loads scripts through `sol::state`, `log` works, and `os` and `io` stay unavailable |
 | TP-LUA-SCRIPT-COMMANDS | requirement-cpp-lua-script-commands | With `HOME` set to an empty temporary directory, `luascript folder` prints `$HOME/.app/gemini-wilgat/userscripts` and does not create that directory or `config.conf`. `luascript list` prints nothing and exits 0. After two regular `*.lua` files and one non-lua file, `luascript list` numbers the lua files in basename order, `luascript view 1` prints that file, and `luascript view 9` exits 1. `luascript new gemini-note.lua` creates that file and the directory. A second `new` of the same name exits 1. `luascript new` with standard input not a terminal exits 1 and does not read. `luascript edit` from a pipe replaces the file. `luascript edit` on a terminal exits 1 and does not read a body. `--json` prints one object for folder, list, view, edit, and new. `luascript` alone exits 0. The process does not open a window |
-| TP-CPP-DEPENDENCIES | requirement-cpp-dependencies | `pkg-config --exists` succeeds for GTK, WebKitGTK 4.1, GLib, GObject, GIO, SQLite, and Lua 5.3, and both builds request that set |
+| TP-CPP-DEPENDENCIES | requirement-cpp-dependencies | `pkg-config --exists` succeeds for GTK, WebKitGTK 4.1, GLib, GObject, GIO, SQLite, Lua 5.3, epoxy, and EGL, and both builds request that set and link libmpv |
+| TP-DESKTOP-WINDOWS | requirement-cpp-desktop | `desktopcheck --os windows` prints `windows` and exits 0. A display and an x11 backend do not change that token |
+| TP-DESKTOP-MACOS | requirement-cpp-macos | `desktopcheck --os macos` prints `macos` and exits 0. `--json` prints one object. A display does not change the token |
+| TP-DESKTOP-LINUX-X11 | requirement-cpp-linux-x11 | `desktopcheck --os linux --display :99` prints `linux-desktop`. `--gdk-backend x11` does too. `--gdk-backend wayland` exits 1 and the text contains `Next:`. A wayland session type with a display and no wayland backend still prints `linux-desktop` |
+| TP-DESKTOP-SEPARATE | requirement-cpp-desktop | The three tokens differ. `desktop --os windows` exits 1. Help lists `desktop` under Commands and `desktopcheck` under Tests |
+| TP-DESKTOP-LIVE | requirement-cpp-linux-x11 | With `DISPLAY` set and `GDK_BACKEND` unset, `desktop` prints `linux-desktop` and exits 0. With `GDK_BACKEND=wayland` it exits 1. The process does not need a window |
 | TP-WEBUI-AUTO-FOLLOW | requirement-cpp-webui-auto-follow | The allow-list is only `NULL`, so a URI change does not inject. The script clicks `button[aria-label="Follow"]` once and retries the search at 500 ms for at most 20 attempts |
 | TP-CPP-LOGGER | requirement-cpp-logger | `test --home /tmp --log-datestamp 20261003` writes one stored line into `/tmp/.app/gemini-wilgat/log/gemini-wilgat-20261003.log`. `test --prefix /tmp` with the same stamp writes a different file under `/tmp/var/gemini-wilgat/log/`. The component on a stored line is the base name of the source file that called `ciao_*` |
 | TP-CPP-LOGGER-FOLDER | requirement-cpp-logger-folder | A normal user resolves `$HOME/.app/gemini-wilgat/log`. Root or sudo resolves `/var/gemini-wilgat/log`. `--prefix /tmp` and `--home /tmp` do not share a directory |

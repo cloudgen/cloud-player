@@ -10,7 +10,7 @@ export BUILD_DEBUG=$BUILD/exe/debug
 export REQUIRED_LIBS="gtk+-3.0 webkit2gtk-4.1 sqlite3 lua5.3"
 
 # Array of prerequisite packages
-REQUIRED_PACKAGES="build-essential libwebkit2gtk-4.1-dev libsqlite3-dev liblua5.3-dev lua5.3"
+REQUIRED_PACKAGES="build-essential pkg-config libgtk-3-dev libwebkit2gtk-4.1-dev libsqlite3-dev libglib2.0-dev liblua5.3-dev lua5.3 libepoxy-dev libegl1-mesa-dev git"
 
 # Array of avoided packages
 AVOIDED_PACKAGES=""
@@ -49,4 +49,8 @@ install() {
   done
 }
 
-install
+# Installing packages is a script action. Sourcing this file for PRJ and
+# paths must not run apt.
+if [ "${BASH_SOURCE[0]}" = "$0" ]; then
+  install
+fi

@@ -1,10 +1,9 @@
 # meson.build — second build for gemini-wilgat.
 # Compiles the same C++ sources as ./build.sh.
-# project() version matches the runtime macros in src/main/cpp/project.h (1.0.7).
-# project.ini VERSION and the README badge remain 1.0.6 until those files are aligned.
+# project() version matches the runtime macros in src/main/cpp/project.h (1.0.8).
 
 project('gemini-wilgat', 'cpp',
-    version: '1.0.7',
+    version: '1.0.8',
     license: 'MIT',
     default_options: [
         'warning_level=3',
@@ -28,6 +27,7 @@ src_files = files(
     'src/main/cpp/auto_follow.cpp',
     'src/main/cpp/config.cpp',
     'src/main/cpp/cookies.cpp',
+    'src/main/cpp/desktop_env.cpp',
     'src/main/cpp/dialog_about.cpp',
     'src/main/cpp/dialog_version.cpp',
     'src/main/cpp/load_page_ogin_check.cpp',
@@ -58,7 +58,11 @@ src_files = files(
 
 # libmpv is fetched by ./build.sh into third_party/libmpv (sibling mpv client library).
 mpv_prefix = meson.current_source_dir() / 'third_party/libmpv/usr'
-mpv_libdir = mpv_prefix / 'lib/x86_64-linux-gnu'
+multiarch = run_command('gcc', '-print-multiarch', check: false).stdout().strip()
+if multiarch == ''
+    multiarch = 'x86_64-linux-gnu'
+endif
+mpv_libdir = mpv_prefix / 'lib' / multiarch
 mpv_inc = include_directories('third_party/libmpv/usr/include')
 cpp = meson.get_compiler('cpp')
 mpv_dep = cpp.find_library('mpv', dirs: [mpv_libdir], required: true)

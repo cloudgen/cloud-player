@@ -154,7 +154,12 @@ if (pkgCflags.isEmpty() || pkgLibs.isEmpty()) {
 // =========================================================================
 def mpvPrefix = file("${projectDir}/third_party/libmpv/usr")
 def mpvInclude = new File(mpvPrefix, "include")
-def mpvLibDir = new File(mpvPrefix, "lib/x86_64-linux-gnu")
+def multiarch = "x86_64-linux-gnu"
+def listedArch = runCommand("gcc -print-multiarch").trim()
+if (listedArch) {
+    multiarch = listedArch.tokenize().last()
+}
+def mpvLibDir = new File(mpvPrefix, "lib/${multiarch}")
 if (!new File(mpvInclude, "mpv/client.h").isFile() || !new File(mpvLibDir, "libmpv.so").isFile()) {
     println "[WARN] libmpv is missing under ${mpvPrefix}. Run ./build.sh once so it can fetch the client library."
 }

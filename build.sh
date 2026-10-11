@@ -38,6 +38,8 @@ install_deps() {
         libglib2.0-dev \
         liblua5.3-dev \
         lua5.3 \
+        libepoxy-dev \
+        libegl1-mesa-dev \
         git
 
     # ====================== sol2 (sol.hpp) via git ======================
@@ -76,13 +78,27 @@ clean() {
     echo "[INFO] Clean completed."
 }
 
+# Host multiarch directory name (for example x86_64-linux-gnu).
+host_multiarch() {
+    local arch
+    arch="$(gcc -print-multiarch 2>/dev/null || true)"
+    if [ -z "${arch}" ]; then
+        arch="$(dpkg-architecture -qDEB_HOST_MULTIARCH 2>/dev/null || true)"
+    fi
+    if [ -z "${arch}" ]; then
+        arch="x86_64-linux-gnu"
+    fi
+    printf '%s\n' "${arch}"
+}
+
 # libmpv is the client library of the sibling mpv project. The sibling tree
 # is not built here, so fetch the matching Ubuntu libmpv into third_party.
 ensure_libmpv() {
-    local root dest so
+    local root dest so arch
     root="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
     dest="${root}/third_party/libmpv"
-    so="${dest}/usr/lib/x86_64-linux-gnu/libmpv.so"
+    arch="$(host_multiarch)"
+    so="${dest}/usr/lib/${arch}/libmpv.so"
     if [ -f "${so}" ] && [ -f "${dest}/usr/include/mpv/client.h" ]; then
         echo "[INFO] libmpv already present in third_party/libmpv"
         return 0
@@ -146,43 +162,48 @@ build() {
     echo "[DEBUG] pkg-config output:"
     echo "${PKG_FLAGS}"
 
-    local project_root mpv_prefix mpv_flags epoxy_flags
+    local project_root mpv_prefix mpv_libdir mpv_flags epoxy_flags obj_dir
     project_root="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
     mpv_prefix="${project_root}/third_party/libmpv/usr"
+    mpv_libdir="${mpv_prefix}/lib/$(host_multiarch)"
     # Do not ask pkg-config for mpv. Its .pc file requires private dev
     # packages that are not installed. The shared library itself is enough.
-    mpv_flags="-I${mpv_prefix}/include -L${mpv_prefix}/lib/x86_64-linux-gnu -lmpv"
+    mpv_flags="-I${mpv_prefix}/include -L${mpv_libdir} -lmpv"
     epoxy_flags=$(pkg-config --cflags --libs epoxy egl)
-    PKG_FLAGS="${PKG_FLAGS} ${mpv_flags} ${epoxy_flags} -ldl -Wl,-rpath,${mpv_prefix}/lib/x86_64-linux-gnu"
+    PKG_FLAGS="${PKG_FLAGS} ${mpv_flags} ${epoxy_flags} -ldl -Wl,-rpath,${mpv_libdir}"
 
-    CPP_FILES=$(find "${SRC_DIR}" -type f -name "*.cpp" | tr '\n' ' ')
-    C_FILES=$(find "${SRC_DIR}" -type f -name "*.c" | tr '\n' ' ')
+    obj_dir="${BUILD_DIR}/obj"
+    rm -rf "${obj_dir}"
+    mkdir -p "${obj_dir}"
 
-    echo "[DEBUG] Found C++ files: ${CPP_FILES}"
-    echo "[DEBUG] Found C files: ${C_FILES}"
+    local src obj objs=() cpp_count=0 c_count=0
+    echo "[INFO] Compiling..."
+    while IFS= read -r -d '' src; do
+        obj="${obj_dir}/$(basename "${src}").o"
+        echo "[DEBUG] cc ${src}"
+        gcc -std=c11 -Wall -Wextra -g -O2 -I/usr/local/include ${PKG_FLAGS} -c "${src}" -o "${obj}"
+        objs+=("${obj}")
+        c_count=$((c_count + 1))
+    done < <(find "${SRC_DIR}" -type f -name "*.c" -print0)
+    while IFS= read -r -d '' src; do
+        obj="${obj_dir}/$(basename "${src}").o"
+        echo "[DEBUG] c++ ${src}"
+        g++ -std=c++17 -Wall -Wextra -g -O2 -I/usr/local/include ${PKG_FLAGS} -c "${src}" -o "${obj}"
+        objs+=("${obj}")
+        cpp_count=$((cpp_count + 1))
+    done < <(find "${SRC_DIR}" -type f -name "*.cpp" -print0)
 
-    if [ -z "$CPP_FILES" ] && [ -z "$C_FILES" ]; then
+    if [ "${#objs[@]}" -eq 0 ]; then
         echo "[ERROR] No source files found!"
         exit 1
     fi
 
-    echo "[INFO] Compiling..."
-    # -I/usr/local/include so <sol/sol.hpp> resolves.
-    if [ -n "$C_FILES" ]; then
-        gcc -std=c11 -Wall -Wextra -g -O2 -I/usr/local/include ${PKG_FLAGS} -c ${C_FILES}
-    fi
-    if [ -n "$CPP_FILES" ]; then
-        g++ -std=c++17 -Wall -Wextra -g -O2 -I/usr/local/include ${PKG_FLAGS} -c ${CPP_FILES}
-    fi
-
     echo "[INFO] Linking final binary..."
-    if [ -n "$CPP_FILES" ]; then
-        g++ *.o -o "${BINARY}" ${PKG_FLAGS} -pthread
+    if [ "${cpp_count}" -gt 0 ]; then
+        g++ "${objs[@]}" -o "${BINARY}" ${PKG_FLAGS} -pthread
     else
-        gcc *.o -o "${BINARY}" ${PKG_FLAGS} -pthread
+        gcc "${objs[@]}" -o "${BINARY}" ${PKG_FLAGS} -pthread
     fi
-
-    rm -f *.o
 
     echo "[INFO] Build successful!"
     echo "[INFO] Binary ready → ${BINARY}"

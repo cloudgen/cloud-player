@@ -24,7 +24,7 @@
 // =========================================================================
 #define VERSION_MAJOR   1
 #define VERSION_MINOR   0
-#define VERSION_PATCH   7
+#define VERSION_PATCH   8
 
 // =========================================================================
 // Default URLs (Bookmarks & Start Page)
@@ -44,7 +44,7 @@
 // =========================================================================
 // Project Description (Single Source of Truth for UI strings)
 // =========================================================================
-#define PROJECT_DESCRIPTION "A lightweight native Gemini wilgat built with WebKitGTK."
+#define PROJECT_DESCRIPTION "Gemini and local video. Names Windows, macOS, or Linux Desktop. The window runs on Linux Desktop (X11)."
 
 // =========================================================================
 // User-Agent Spoofing Configuration (CIAO Single Source of Truth)

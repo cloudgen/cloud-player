@@ -46,7 +46,7 @@
             <mkdir dir="@{objdir}"/>
             <exec executable="bash" failonerror="true">
                 <arg value="-c"/>
-                <arg value="root='@{srcdir}'; ext='@{ext}'; objroot='@{objdir}'; if [ ! -d &quot;$root&quot; ]; then exit 0; fi; while IFS= read -r -d '' src; do rel=&quot;$${src#&quot;$root/&quot;}&quot;; obj=&quot;$objroot/$rel.o&quot;; mkdir -p &quot;$(dirname &quot;$obj&quot;)&quot;; @{compiler} -std=@{std} -Wall -Wextra -g -O2 -I/usr/local/include ${pkg.cflags} -c &quot;$src&quot; -o &quot;$obj&quot; || exit 1; done &lt; &lt;(find &quot;$root&quot; -type f -name &quot;*.$ext&quot; -print0); exit 0"/>
+                <arg value="root='@{srcdir}'; ext='@{ext}'; objroot='@{objdir}'; if [ ! -d &quot;$root&quot; ]; then exit 0; fi; while IFS= read -r -d '' src; do rel=&quot;$${src#&quot;$root/&quot;}&quot;; obj=&quot;$objroot/$rel.o&quot;; mkdir -p &quot;$(dirname &quot;$obj&quot;)&quot;; @{compiler} -std=@{std} -Wall -Wextra -g -O2 -I/usr/local/include ${pkg.cflags} ${extra.cflags} -c &quot;$src&quot; -o &quot;$obj&quot; || exit 1; done &lt; &lt;(find &quot;$root&quot; -type f -name &quot;*.$ext&quot; -print0); exit 0"/>
             </exec>
         </sequential>
     </macrodef>
@@ -202,7 +202,9 @@ install() {
   done
 }
 
-install
+if [ "$${BASH_SOURCE[0]}" = "$$0" ]; then
+  install
+fi
 ]]></echo>
         <chmod file="${project.sh}" perm="755"/>
         <exec executable="${project.sh}"/>
@@ -271,6 +273,14 @@ install
             <arg value="--libs"/>
             <arg line="${lib.versions}"/>
         </exec>
+        <exec executable="bash" failonerror="true" outputproperty="extra.cflags">
+            <arg value="-c"/>
+            <arg value="root='${basedir}/third_party/libmpv/usr'; arch=$(gcc -print-multiarch 2&gt;/dev/null || echo x86_64-linux-gnu); test -f &quot;$root/include/mpv/client.h&quot; || { echo 'libmpv headers missing. Run ./build.sh build once so it can fetch the client library.' &gt;&amp;2; exit 1; }; printf '%s\n' &quot;-I$root/include&quot;"/>
+        </exec>
+        <exec executable="bash" failonerror="true" outputproperty="extra.libs">
+            <arg value="-c"/>
+            <arg value="root='${basedir}/third_party/libmpv/usr'; arch=$(gcc -print-multiarch 2&gt;/dev/null || echo x86_64-linux-gnu); lib=&quot;$root/lib/$arch&quot;; test -f &quot;$lib/libmpv.so&quot; || { echo 'libmpv library missing. Run ./build.sh build once so it can fetch the client library.' &gt;&amp;2; exit 1; }; epoxy=$(pkg-config --libs epoxy egl) || exit 1; printf '%s\n' &quot;-L$lib -Wl,-rpath,$lib -lmpv -ldl $epoxy&quot;"/>
+        </exec>
 
         <echo message="C files: ${c.count}; C++ files: ${cpp.count}; linker: ${linker}"/>
         <compile-lang compiler="gcc" std="c11" srcdir="${src.c.dir}" ext="c" objdir="${build.obj.dir}/c"/>
@@ -286,6 +296,7 @@ install
             <arg value="-o"/>
             <arg value="${build.debug.dir}/${app.name}"/>
             <arg line="${pkg.libs}"/>
+            <arg line="${extra.libs}"/>
             <arg value="-pthread"/>
         </exec>
     </target>

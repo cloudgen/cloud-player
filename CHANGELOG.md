@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.8] - 2026-10-11
+
+### Added
+- One decision names `windows`, `macos`, or `linux-desktop` (labels Windows, macOS, and Linux Desktop).
+- `gemini-wilgat desktop` names this process and exits. `gemini-wilgat desktopcheck --os windows|macos|linux` names a desktop from flags and does not read this process.
+- The Linux Desktop window title adds ` - Linux Desktop`, and the window shows `Desktop: Linux Desktop`.
+- Requirements for that decision, for the Linux X11 window, and for the macOS name.
+
+### Changed
+- The window opens only on Linux Desktop: a Linux build, a non-empty `DISPLAY`, and `GDK_BACKEND` unset or containing `x11`. Anything else exits before `gtk_init` with a `Next:` line.
+- Linux builds (`./build.sh`, Meson, `ant compile`, and Gradle `linkDebug`) link libmpv from the host multiarch directory plus epoxy and EGL. Object files from `./build.sh` go under `target/exe/debug/obj/`. Sourcing `project.sh` does not install packages.
+- Product docs now describe cloud-player 1.0.8. The program you run is still `gemini-wilgat`. The window title base is still Gemini (wilgat).
+
+This repository still does not produce a macOS or Windows binary. A click on a file inside the page still does not start the video view.
+
 ## [1.0.7] - 2026-10-11
 
 ### Added

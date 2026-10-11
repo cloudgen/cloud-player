@@ -36,7 +36,7 @@ This is the single owner of the live gemini-wilgat window: what page opens, how 
 ### 2.1 Identity of the window
 
 - The runtime id is `PROJECT_ID` in `src/main/cpp/project.h`. For this product that value is `gemini-wilgat`.
-- The display name is `PROJECT_NAME`: `Gemini (wilgat)`.
+- The display name is `PROJECT_NAME`: `Gemini (wilgat)`. The window title adds ` - ` and the desktop label from `requirement-cpp-desktop.md`. The X11 gate is `requirement-cpp-linux-x11.md`.
 - The start page is `START_PAGE`: `https://gemini.google.com`.
 - `PROFILE_PAGE` is defined as `START_PAGE` plus `/settings/profile`. It is not the start page. The bookmark list must not add it; that rule is owned by `requirement-cpp-webui-bookmark.md`.
 

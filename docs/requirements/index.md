@@ -7,6 +7,9 @@ Product law for gemini-wilgat. Rows match files in this folder.
 | requirement-class-software-dev | class | Active | requirement-class-software-dev.md |
 | requirement-cpp-coding-style | coding | Active | requirement-cpp-coding-style.md |
 | requirement-cpp-window | window | Active | requirement-cpp-window.md |
+| requirement-cpp-desktop | desktop | Active | requirement-cpp-desktop.md |
+| requirement-cpp-linux-x11 | desktop | Active | requirement-cpp-linux-x11.md |
+| requirement-cpp-macos | desktop | Active | requirement-cpp-macos.md |
 | requirement-cpp-ui-menu | menu | Active | requirement-cpp-ui-menu.md |
 | requirement-cpp-webui-auto-follow | webui | Active | requirement-cpp-webui-auto-follow.md |
 | requirement-cpp-webui-bookmark | webui | Active | requirement-cpp-webui-bookmark.md |
@@ -34,6 +37,8 @@ Product law for gemini-wilgat. Rows match files in this folder.
 | requirement-cpp-skills-installation-gradle | build | Deferred | requirement-cpp-skills-installation-gradle.md |
 
 The window row is the single owner of the live window: start page, WebKit load order, which userscripts run, the GStreamer environment, and permission requests.
+
+The desktop row names Windows, macOS, and Linux Desktop. The linux-x11 row owns the X11 display and the refusal to open the window otherwise. The macos row owns the macOS token. This tree builds the Linux Desktop window only.
 
 The ui-menu row owns the menu bar: File (AutoClick, Bookmark, User Agent, Lua Script, Log, Exit) and About (Show Version). The About dialog stays unattached. Log's actions are the log-commands row. Lua Script's actions are the lua-script-commands row.
 

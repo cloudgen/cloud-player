@@ -45,6 +45,7 @@
 #include "project.h"
 #include "webkit_setup.h"
 #include "ui_window_app.h"
+#include "desktop_env.h"
 #include <gtk/gtk.h>                    // Required for gtk_main_quit()
 
 // ──────────────────────────────────────────────
@@ -212,6 +213,19 @@ int main(int argc, char *argv[])
 
     ciao_info("Starting %s %d.%d.%d", 
               config_get_project_name(), VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH);
+
+    /* Linux Desktop is the X11 window. Windows and macOS are named by the
+       same decision and do not open this GTK window. requirement-cpp-desktop.md */
+    desktop_prepare_linux_x11();
+    {
+        DesktopKind desktop_kind = desktop_kind_live();
+        if (desktop_kind != DESKTOP_LINUX) {
+            ciao_error("This session is not Linux Desktop (X11). The window in this program opens only on Linux Desktop.");
+            ciao_error("Next: set DISPLAY to an X11 server and leave GDK_BACKEND unset, or set GDK_BACKEND=x11, then start the program again.");
+            return 1;
+        }
+        ciao_info("desktop: %s", desktop_kind_token(desktop_kind));
+    }
 
     gtk_init(&argc, &argv);
 
