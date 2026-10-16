@@ -1,15 +1,15 @@
 **file**: docs/requirements/requirement-cpp-dependencies.md
 **Status**: Active
-**Updated**: 2026-10-11
+**Updated**: 2026-10-16
 **Philosophy**: CIAO v2.10.2 / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
 
 ## 1. Purpose
 
-This file owns the libraries the cloud-player C++ program compiles and links against, and the apt packages that provide them. `./build.sh install` is the command that requests the apt packages. `./build.sh build` and `meson.build` both request the same link set. How those commands compile stays in the build requirements. How sol2 runs Lua stays in `requirement-cpp-lua-script.md`.
+This file owns the libraries the Linux cloud-player program compiles and links against, and the apt packages that provide them. `./build.sh install` is the command that requests the apt packages. `./build.sh build` and `meson.build` both request the same Linux link set. How those commands compile stays in the build requirements. How sol2 runs Lua stays in `requirement-cpp-lua-script.md`. The Windows executable's libraries are `requirement-cpp-windows-environment.md`.
 
 ### 1.1 Human-facing
 
-**In one sentence:** You install libwebkit2gtk, libsqlite3, liblua, GTK, and GLib, and both builds link those same libraries.
+**In one sentence:** You install libwebkit2gtk, libsqlite3, liblua, GTK, and GLib, and the Linux builds link those same libraries.
 
 | Box | Meaning | Example |
 |-----|---------|---------|
@@ -19,7 +19,7 @@ This file owns the libraries the cloud-player C++ program compiles and links aga
 
 | Includes | Excludes |
 |----------|----------|
-| The link modules, the apt packages, sol2 headers, and pthread | A second package list inside the class file |
+| The Linux link modules, the apt packages, sol2 headers, and pthread | The Windows link set (`requirement-cpp-windows-environment.md`) and a second package list inside the class file |
 
 | Surface | What you open | What for |
 |---------|---------------|----------|
@@ -74,7 +74,7 @@ The link line appends `-pthread`.
 
 ### 2.2 Why this requirement exists
 
-- **CIAO Principle 5** (https://github.com/cloudgen/ciao): one dependency list. Both builds consume the table in this file.
+- **CIAO Principle 5** (https://github.com/cloudgen/ciao): one Linux dependency list. `./build.sh` and `meson.build` consume the table in this file. The Windows executable does not.
 - **CIAO Principle 1**: a missing `libwebkit2gtk`, `libsqlite3`, or `liblua` fails at configure or link time, on the module name in the table.
 
 ## 3. Design principles
@@ -88,7 +88,7 @@ The link line appends `-pthread`.
 
 | TP-ID | Pass |
 |-------|------|
-| TP-CPP-DEPENDENCIES | `pkg-config --exists` succeeds for `gtk+-3.0`, `webkit2gtk-4.1`, `glib-2.0`, `gobject-2.0`, `gio-2.0`, `sqlite3`, `lua5.3`, `epoxy`, and `egl`. `build.sh` and `meson.build` both request that set and link libmpv from `third_party/libmpv` |
+| TP-CPP-DEPENDENCIES | `pkg-config --exists` succeeds for `gtk+-3.0`, `webkit2gtk-4.1`, `glib-2.0`, `gobject-2.0`, `gio-2.0`, `sqlite3`, `lua5.3`, `epoxy`, and `egl`. `build.sh` and `meson.build` both request that Linux set and link libmpv from `third_party/libmpv` |
 
 Map: `docs/reviews/test-plan.md`. Status stays todo until that check is run.
 
@@ -106,6 +106,7 @@ Future editors must not drop `libwebkit2gtk-4.1-dev`, `libsqlite3-dev`, or `libl
 | `docs/requirements/requirement-cpp-skills-installation-meson.md` | `dependency()` call sites |
 | `docs/requirements/requirement-cpp-lua-script.md` | sol2 API |
 | `docs/requirements/requirement-cpp-window.md` | GStreamer environment variables |
+| `docs/requirements/requirement-cpp-windows-environment.md` | Windows link set. This file does not own it |
 | `docs/reviews/test-plan.md` | TP-CPP-DEPENDENCIES |
 | `build.sh` | Apt list and `pkg-config` call |
 | `meson.build` | `dependency()` entries |

@@ -1,9 +1,9 @@
 # meson.build — second build for cloud-player.
 # Compiles the same C++ sources as ./build.sh.
-# project() version matches the runtime macros in src/main/cpp/project.h (1.1.0).
+# project() version matches the runtime macros in src/main/cpp/project.h (1.2.0).
 
 project('cloud-player', 'cpp',
-    version: '1.1.0',
+    version: '1.2.0',
     license: 'MIT',
     default_options: [
         'warning_level=3',

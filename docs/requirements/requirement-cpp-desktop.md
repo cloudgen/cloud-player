@@ -1,11 +1,11 @@
 **file**: docs/requirements/requirement-cpp-desktop.md
 **Status**: Active
-**Updated**: 2026-10-11
+**Updated**: 2026-10-16
 **Philosophy**: CIAO v2.10.2 / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
 
 ## 1. Purpose
 
-This file owns the one decision that names the desktop: Windows, macOS, or Linux Desktop. `desktop` reports the process. `desktopcheck` reports a supplied combination and does not read the process. The Linux X11 rules for the window are `requirement-cpp-linux-x11.md`. The macOS identity is `requirement-cpp-macos.md`. Windows is a peer of those two in the table below. This tree opens the GTK window only for Linux Desktop.
+This file owns the one decision that names the desktop: Windows, macOS, or Linux Desktop. `desktop` reports the process. `desktopcheck` reports a supplied combination and does not read the process. The Linux X11 rules for the window are `requirement-cpp-linux-x11.md`. The macOS identity is `requirement-cpp-macos.md`. Windows is a peer of those two in the table below. This tree opens the GTK window only for Linux Desktop. The Visual C++ executable is `requirement-cpp-windows-player.md`. It does not compile `desktop_env.cpp`.
 
 ### 1.1 Human-facing
 
@@ -55,7 +55,7 @@ The compile target fills `os` when the caller does not pass one: `_WIN32` is `wi
 
 On Linux Desktop the window title is the configured title, a space, a hyphen, a space, and `Linux Desktop`. A label in the window reads `Desktop: Linux Desktop`. The base title stays `requirement-cpp-window.md`.
 
-A Windows or macOS compile does not open this GTK window. It can still answer `desktop`.
+A Windows or macOS compile of these GTK sources does not open this GTK window. It can still answer `desktop`. The Visual C++ executable does not compile `desktop_env.cpp` and does not answer `desktop`.
 
 ### 2.1 Implementation notes (this project)
 
@@ -104,6 +104,7 @@ Future editors must not add a fourth desktop name, let `WAYLAND_DISPLAY` overrid
 | `docs/requirements/index.md` | Registry |
 | `docs/requirements/requirement-cpp-linux-x11.md` | X11 selection and the window gate |
 | `docs/requirements/requirement-cpp-macos.md` | macOS identity |
+| `docs/requirements/requirement-cpp-windows-player.md` | Visual C++ executable. It does not answer `desktop` |
 | `docs/requirements/requirement-cpp-parameters.md` | `desktop` and `desktopcheck` in the flag list |
 | `docs/requirements/requirement-cpp-window.md` | Base window title |
 | `src/main/cpp/desktop_env.cpp` | The decision |

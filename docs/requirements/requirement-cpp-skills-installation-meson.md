@@ -75,7 +75,7 @@ Current sources:
 - `src/main/cpp/userscript_manager.cpp`
 - `src/main/cpp/video_player.cpp`
 
-The `project()` version is 1.1.0, the same numbers as the `project.h` macros and `project.ini` `VERSION`. libmpv is linked from `third_party/libmpv/usr/lib/` plus `gcc -print-multiarch`.
+The `project()` version is 1.2.0, the same numbers as the `project.h` macros and `project.ini` `VERSION`. libmpv is linked from `third_party/libmpv/usr/lib/` plus `gcc -print-multiarch`.
 
 ## 3. Protection rule
 

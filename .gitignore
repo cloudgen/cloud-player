@@ -6,6 +6,7 @@
 target/
 build/
 builddir/
+build-win/
 cloud-player
 
 # Binary executables
@@ -87,7 +88,7 @@ Thumbs.db
 logs/
 
 # libmpv fetched by build.sh (sibling mpv client library)
-third_party/
+third_party/libmpv/
 
 # Local clone leftover from the sol2 header install
 sol2-temp/

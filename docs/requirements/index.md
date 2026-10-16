@@ -10,6 +10,9 @@ Product law for cloud-player. Rows match files in this folder.
 | requirement-cpp-desktop | desktop | Active | requirement-cpp-desktop.md |
 | requirement-cpp-linux-x11 | desktop | Active | requirement-cpp-linux-x11.md |
 | requirement-cpp-macos | desktop | Active | requirement-cpp-macos.md |
+| requirement-cpp-windows-environment | windows | Active | requirement-cpp-windows-environment.md |
+| requirement-cpp-windows-player | windows | Active | requirement-cpp-windows-player.md |
+| requirement-cpp-dual-build | build | Active | requirement-cpp-dual-build.md |
 | requirement-cpp-ui-menu | menu | Active | requirement-cpp-ui-menu.md |
 | requirement-cpp-webui-auto-follow | webui | Active | requirement-cpp-webui-auto-follow.md |
 | requirement-cpp-webui-bookmark | webui | Active | requirement-cpp-webui-bookmark.md |
@@ -36,11 +39,11 @@ Product law for cloud-player. Rows match files in this folder.
 | requirement-cpp-skills-installation-gnu-make | build | Deferred | requirement-cpp-skills-installation-gnu-make.md |
 | requirement-cpp-skills-installation-gradle | build | Deferred | requirement-cpp-skills-installation-gradle.md |
 
-The window row is the single owner of the live window: start page, WebKit load order, which userscripts run, the GStreamer environment, and permission requests.
+The window row is the single owner of the Linux GTK window: start page, WebKit load order, which userscripts run, the GStreamer environment, permission requests, and Open File on that bar. The Windows window, including its Open File button, is the windows-player row.
 
-The desktop row names Windows, macOS, and Linux Desktop. The linux-x11 row owns the X11 display and the refusal to open the window otherwise. The macos row owns the macOS token. This tree builds the Linux Desktop window only.
+The desktop row names Windows, macOS, and Linux Desktop. The linux-x11 row owns the X11 display and the refusal to open the GTK window otherwise. The macos row owns the macOS token. The GTK window is the Linux Desktop build. The Windows executable is the windows-player row. The Visual C++ toolchain is the windows-environment row. Which command runs on which host is the dual-build row.
 
-The ui-menu row owns the menu bar: File (AutoClick, Bookmark, User Agent, Lua Script, Log, Exit) and About (Show Version). The About dialog stays unattached. Log's actions are the log-commands row. Lua Script's actions are the lua-script-commands row.
+The ui-menu row owns the Linux menu bar: File (AutoClick, Bookmark, User Agent, Lua Script, Log, Exit) and About (Show Version). The Windows menu is the windows-player row. The About dialog stays unattached. Log's actions are the log-commands row. Lua Script's actions are the lua-script-commands row.
 
 The webui-auto-follow row owns the Follow click script and the allow-list. That list is empty, so a page change does not click Follow.
 
@@ -48,7 +51,7 @@ The webui-bookmark row owns the bookmark list: one item, Start Page, and the `--
 
 The lua-script row owns the C++ host: one sol2 state in `userscript_manager.cpp`. The lua-script-commands row owns File → Lua Script and the `luascript` verb (`folder`, `list`, `view`, `edit`, `new`) in text and in `--json`. New asks for the filename in a dialog. That verb is in the help text. The menu and the verb are in the binary. `TP-LUA-SCRIPT-COMMANDS` is done.
 
-The dependencies row owns the libraries the C/C++ program links: GTK 3, WebKitGTK 4.1 (libwebkit2gtk), GLib, SQLite (libsqlite3), Lua 5.3 (liblua), threads, and the sol2 headers.
+The dependencies row owns the libraries the Linux builds link: GTK 3, WebKitGTK 4.1 (libwebkit2gtk), GLib, SQLite (libsqlite3), Lua 5.3 (liblua), threads, and the sol2 headers. The Windows link set is the windows-environment row.
 
 Deferred rows are not current behavior. `./build.sh` implements `install`, `clean`, and `build` only.
 

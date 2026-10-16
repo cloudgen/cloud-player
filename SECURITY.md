@@ -4,7 +4,8 @@
 
 | Version | Supported |
 |---------|-----------|
-| 1.1.0 (current) | Yes |
+| 1.2.0 (current) | Yes |
+| 1.1.0 | Yes |
 | 1.0.8 | Yes |
 | 1.0.7 | Yes |
 | Older releases | Not published from this repository |

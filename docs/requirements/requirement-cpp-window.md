@@ -5,7 +5,7 @@
 
 ## 1. Purpose
 
-This is the single owner of the live cloud-player window: what page opens, how WebKit is created, how userscripts load, and how audio and permission requests are handled. Other requirement files point here. They do not restate this behavior. The menu bar is owned by `requirement-cpp-ui-menu.md`. The sol2 binding that runs those scripts is owned by `requirement-cpp-lua-script.md`.
+This is the single owner of the Linux GTK window: what page opens, how WebKit is created, how userscripts load, and how audio and permission requests are handled. Open File on that GTK bar is this file. Open File on `cloud-player.exe` is `requirement-cpp-windows-player.md`. Other requirement files point here for the GTK window. They do not restate this behavior. The menu bar is owned by `requirement-cpp-ui-menu.md`. The sol2 binding that runs those scripts is owned by `requirement-cpp-lua-script.md`.
 
 ### 1.1 Human-facing
 

@@ -1,11 +1,11 @@
 **file**: docs/requirements/requirement-cpp-parameters.md
 **Status**: Active
-**Updated**: 2026-10-11
+**Updated**: 2026-10-16
 **Philosophy**: CIAO v2.10.2 / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
 
 ## 1. Purpose
 
-This file owns every command-line flag, the `log` verb, the `luascript` verb, the `desktop` verb, the `logcheck` verb, the `desktopcheck` verb, and every environment variable the cloud-player binary accepts. `ciao_print_help()` must list each of them. The `log` actions are `requirement-cpp-log-commands.md`. The `luascript` actions are `requirement-cpp-lua-script-commands.md`. `logcheck` is `requirement-cpp-log-format.md`. `desktop` and `desktopcheck` are `requirement-cpp-desktop.md`.
+This file owns every command-line flag, the `log` verb, the `luascript` verb, the `desktop` verb, the `logcheck` verb, the `desktopcheck` verb, and every environment variable the Linux cloud-player binary accepts. `ciao_print_help()` must list each of them. The `log` actions are `requirement-cpp-log-commands.md`. The `luascript` actions are `requirement-cpp-lua-script-commands.md`. `logcheck` is `requirement-cpp-log-format.md`. `desktop` and `desktopcheck` are `requirement-cpp-desktop.md`. The Windows executable's help is `requirement-cpp-windows-player.md`.
 
 ### 1.1 Human-facing
 

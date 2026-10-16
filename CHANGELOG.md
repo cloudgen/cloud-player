@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-10-16
+
+### Added
+- Windows program `cloud-player.exe`. `build-win.bat` builds it with Visual Studio 2022 (Win32 and WebView2). Linux stays `./build.sh`.
+- Open File on the Windows address bar, beside Reload. It asks for one local file, writes that file's address into the bar, and then does the same thing as Go.
+- On Windows, a submitted address whose path ends in `.mp4` plays in the WebView2 window. The Linux window still plays that address through libmpv.
+
+### Changed
+- Product docs now describe cloud-player 1.2.0. This repository builds the Linux program and the Windows program. It still does not produce a macOS program.
+- README pictures of the Linux window and of the local `.mp4` view were taken again. They show Open File.
+
 ## [1.1.0] - 2026-10-16
 
 ### Added

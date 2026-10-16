@@ -2,7 +2,7 @@
 **Status**: Active
 **Area**: class
 **Key**: requirement-class-software-dev
-**Updated**: 2026-10-11
+**Updated**: 2026-10-16
 **Philosophy**: CIAO v2.10.2 / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
 
 ## 1. Purpose
@@ -11,7 +11,7 @@ This workspace is a software product people install and run: a native GTK window
 
 ### 1.1 Human-facing
 
-**In one sentence:** You run cloud-player on Linux Desktop; the program opens a Gemini page in a GTK window and can name Windows, macOS, or Linux Desktop; this file only records what kind of software project this folder is.
+**In one sentence:** You run cloud-player on Linux Desktop as a GTK window, and on Windows as the Visual C++ window in the Windows player requirement; this file only records what kind of software project this folder is.
 
 | Box | Meaning | Example |
 |-----|---------|---------|
@@ -39,9 +39,9 @@ This workspace is a software product people install and run: a native GTK window
 1. This workspace is software-development. The only class file is `requirement-class-software-dev.md`.
 2. This file holds stack facts until a peer owns them. Peers are not copied here.
 3. The primary language is C++. Lua is the secondary language of the ship unit.
-4. The toolchain class is system `g++`. Version policy is unconstrained: a recent toolchain that passes the build. C++ is C++17. Cross-compilation is out of scope.
-5. The primary build tool is `./build.sh` (`install`, `clean`, `build`). Meson is a second build file and must compile the same sources. The dependency set is owned by `requirement-cpp-dependencies.md`. There is no lockfile.
-6. The window runtime is Linux Desktop (X11) with GTK 3 and WebKitGTK 4.1. The same decision also names Windows and macOS, and those two do not open this window. Linux X11 is `requirement-cpp-linux-x11.md`. macOS is `requirement-cpp-macos.md`. The three names are `requirement-cpp-desktop.md`. Package names are owned by `requirement-cpp-dependencies.md`.
+4. The Linux toolchain class is system `g++`. Version policy is unconstrained: a recent toolchain that passes the build. C++ is C++17. Cross-compilation from Linux to Windows is out of scope. The Windows compiler is `requirement-cpp-windows-environment.md`.
+5. The Linux build tool is `./build.sh` (`install`, `clean`, `build`). Meson is a second Linux build file and must compile the same Linux sources. The Linux dependency set is owned by `requirement-cpp-dependencies.md`. There is no lockfile. Which command runs on which host is `requirement-cpp-dual-build.md`.
+6. The GTK window runtime is Linux Desktop (X11) with GTK 3 and WebKitGTK 4.1. The same decision also names Windows and macOS, and those two do not open this GTK window. Linux X11 is `requirement-cpp-linux-x11.md`. macOS is `requirement-cpp-macos.md`. The three names are `requirement-cpp-desktop.md`. The Windows Visual C++ window is `requirement-cpp-windows-player.md`. Linux package names are owned by `requirement-cpp-dependencies.md`.
 7. Actor / role / subject: **considered — no dest approver and no approval subject**. There is no approval desk.
 8. Dest fence conditions: **considered — no dest fence conditions**. Do not invent one.
 9. Coding-style related requirement: `requirement-cpp-coding-style.md`. This class file points at it and does not restate the C++ rules.
@@ -66,6 +66,9 @@ This workspace is a software product people install and run: a native GTK window
 | Windows, macOS, and Linux Desktop names | `requirement-cpp-desktop.md` |
 | Linux X11 window gate | `requirement-cpp-linux-x11.md` |
 | macOS identity | `requirement-cpp-macos.md` |
+| Windows Visual C++ toolchain | `requirement-cpp-windows-environment.md` |
+| Windows WebView2 program | `requirement-cpp-windows-player.md` |
+| Linux and Windows entry points | `requirement-cpp-dual-build.md` |
 | UI menu bar | `requirement-cpp-ui-menu.md` |
 | WebUI auto-follow | `requirement-cpp-webui-auto-follow.md` |
 | WebUI bookmark list | `requirement-cpp-webui-bookmark.md` |
