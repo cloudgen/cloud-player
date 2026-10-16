@@ -6,7 +6,7 @@
 
 ## 1. Purpose
 
-This file is where portable C++ lessons are specialized for gemini-wilgat. Without this requirement, those lessons arrive raw. Class law points here and does not copy these rules.
+This file is where portable C++ lessons are specialized for cloud-player. Without this requirement, those lessons arrive raw. Class law points here and does not copy these rules.
 
 ### 1.1 Human-facing
 
@@ -33,7 +33,7 @@ This file is where portable C++ lessons are specialized for gemini-wilgat. Witho
 
 ## 2. Core rules
 
-gemini-wilgat follows **CIAO-Lite**:
+cloud-player follows **CIAO-Lite**:
 - **C** - Caution
 - **I** - Intentional
 - **A** - Anti-fragile

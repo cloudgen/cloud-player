@@ -9,7 +9,7 @@ This file owns `settings.sqlite`: the engine, the path, the table, and the debug
 
 ### 1.1 Human-facing
 
-**In one sentence:** The program stores your user-agent choice in `~/.app/gemini-wilgat/settings.sqlite`, and `DEBUG=1` prints every row at startup.
+**In one sentence:** The program stores your user-agent choice in `~/.app/cloud-player/settings.sqlite`, and `DEBUG=1` prints every row at startup.
 
 | Box | Meaning | Example |
 |-----|---------|---------|
@@ -23,7 +23,7 @@ This file owns `settings.sqlite`: the engine, the path, the table, and the debug
 
 | Surface | What you open | What for |
 |---------|---------------|----------|
-| `~/.app/gemini-wilgat/settings.sqlite` | Settings database | Key/value rows |
+| `~/.app/cloud-player/settings.sqlite` | Settings database | Key/value rows |
 | The terminal with `DEBUG=1` | Debug log | The dump |
 
 | You do… | What it means | What you type |
@@ -49,7 +49,7 @@ When `DEBUG=1`, startup calls `ciao_debug` with every row in this table.
 
 ### 2.1 Implementation notes (this project)
 
-`PROJECT_ID` is `gemini-wilgat`. The file is `~/.app/gemini-wilgat/settings.sqlite`.
+`PROJECT_ID` is `cloud-player`. The file is `~/.app/cloud-player/settings.sqlite`.
 
 ## 3. Protection rule
 

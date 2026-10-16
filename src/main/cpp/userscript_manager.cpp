@@ -1,11 +1,11 @@
 // =========================================================================
 // userscript_manager.cpp
-// CIAO DEFENSIVE CODING STYLE - LUA USERSCRIPT MANAGER (gemini-wilgat)
+// CIAO DEFENSIVE CODING STYLE - LUA USERSCRIPT MANAGER (cloud-player)
 // =========================================================================
 //
 // Purpose:
 //   Single Point of Truth for the Lua userscript system.
-//   Loads all *.lua files from ~/.app/gemini-wilgat/userscripts/
+//   Loads all *.lua files from ~/.app/cloud-player/userscripts/
 //   and provides a safe sandboxed API to WebKitWebView.
 //
 // Key Features:

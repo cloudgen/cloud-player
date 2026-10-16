@@ -1,15 +1,15 @@
 **file**: docs/requirements/requirement-cpp-window.md
 **Status**: Active
-**Updated**: 2026-10-04
+**Updated**: 2026-10-16
 **Philosophy**: CIAO v2.10.2 / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
 
 ## 1. Purpose
 
-This is the single owner of the live gemini-wilgat window: what page opens, how WebKit is created, how userscripts load, and how audio and permission requests are handled. Other requirement files point here. They do not restate this behavior. The menu bar is owned by `requirement-cpp-ui-menu.md`. The sol2 binding that runs those scripts is owned by `requirement-cpp-lua-script.md`.
+This is the single owner of the live cloud-player window: what page opens, how WebKit is created, how userscripts load, and how audio and permission requests are handled. Other requirement files point here. They do not restate this behavior. The menu bar is owned by `requirement-cpp-ui-menu.md`. The sol2 binding that runs those scripts is owned by `requirement-cpp-lua-script.md`.
 
 ### 1.1 Human-facing
 
-**In one sentence:** You launch gemini-wilgat and it opens Gemini in a GTK window, with optional Lua userscripts.
+**In one sentence:** You launch cloud-player and it opens Gemini in a GTK window, with optional Lua userscripts.
 
 | Box | Meaning | Example |
 |-----|---------|---------|
@@ -23,8 +23,8 @@ This is the single owner of the live gemini-wilgat window: what page opens, how 
 
 | Surface | What you open | What for |
 |---------|---------------|----------|
-| The gemini-wilgat window | The WebKit view | The start page |
-| `~/.app/gemini-wilgat/userscripts/*.lua` | Userscript directory | Page hooks |
+| The cloud-player window | The WebKit view | The start page |
+| `~/.app/cloud-player/userscripts/*.lua` | Userscript directory | Page hooks |
 
 | You do… | What it means | What you type |
 |---------|---------------|---------------|
@@ -35,8 +35,8 @@ This is the single owner of the live gemini-wilgat window: what page opens, how 
 
 ### 2.1 Identity of the window
 
-- The runtime id is `PROJECT_ID` in `src/main/cpp/project.h`. For this product that value is `gemini-wilgat`.
-- The display name is `PROJECT_NAME`: `Gemini (wilgat)`. The window title adds ` - ` and the desktop label from `requirement-cpp-desktop.md`. The X11 gate is `requirement-cpp-linux-x11.md`.
+- The runtime id is `PROJECT_ID` in `src/main/cpp/project.h`. For this product that value is `cloud-player`.
+- The display name is `PROJECT_NAME`: `cloud-player`. The window title adds ` - ` and the desktop label from `requirement-cpp-desktop.md`. The X11 gate is `requirement-cpp-linux-x11.md`.
 - The start page is `START_PAGE`: `https://gemini.google.com`.
 - `PROFILE_PAGE` is defined as `START_PAGE` plus `/settings/profile`. It is not the start page. The bookmark list must not add it; that rule is owned by `requirement-cpp-webui-bookmark.md`.
 
@@ -45,11 +45,13 @@ This is the single owner of the live gemini-wilgat window: what page opens, how 
 Top to bottom:
 
 1. Menu bar.
-2. URL bar (back, forward, reload, entry, Go) when `show_navigation_buttons` is true.
+2. URL bar (back, forward, reload, Open File, entry, Go) when `show_navigation_buttons` is true.
 3. Read-only user-agent label when `show_user_agent_label` is true.
 4. The WebKit view, which takes the remaining space.
 
 The URL entry follows `notify::uri`. Enter does the same thing as Go. Page loads go through `load_page()` or `load_page_with_login_check()` in `src/main/cpp/load_page_ogin_check.cpp`.
+
+Open File sits beside Reload. It asks for one local file. The chosen file's URI is written into the URL entry, then the same action as Go runs. Cancel leaves the entry unchanged. The button stays sensitive when `navigation_buttons_enabled` is false.
 
 The items inside the menu bar are owned by `requirement-cpp-ui-menu.md`.
 
@@ -103,7 +105,7 @@ The About menu and the unattached About dialog are owned by `requirement-cpp-ui-
 
 ### 2.10 Userscripts
 
-Directory: `~/.app/` plus `PROJECT_ID` plus `/userscripts`. For this product that is `~/.app/gemini-wilgat/userscripts`. The directory is created at startup with mode `0700` when missing. Showing that folder, and viewing, editing, or creating a file there, is `requirement-cpp-lua-script-commands.md`.
+Directory: `~/.app/` plus `PROJECT_ID` plus `/userscripts`. For this product that is `~/.app/cloud-player/userscripts`. The directory is created at startup with mode `0700` when missing. Showing that folder, and viewing, editing, or creating a file there, is `requirement-cpp-lua-script-commands.md`.
 
 Every `*.lua` file in that directory is loaded in alphabetical order. Header lines `-- @match` and `-- @priority` are read. Higher priority runs first. The default priority is 50. A script with no `@match` runs on every URL change. When `DEBUG=1` is on, the loader prints the values owned by `requirement-cpp-debug-mode.md`.
 
@@ -165,5 +167,5 @@ Future editors must not add a second window requirement, hard-code a user-agent 
 | `docs/requirements/requirement-cpp-lua-script-commands.md` | Folder, view, edit, and new |
 | `docs/requirements/requirement-cpp-debug-mode.md` | Debug values from that loader |
 
-**Last updated**: 2026-10-04
+**Last updated**: 2026-10-16
 **Owner**: Window

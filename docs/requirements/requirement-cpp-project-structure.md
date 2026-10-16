@@ -9,7 +9,7 @@ This file owns the two directories people confuse: the source tree, and the runt
 
 ### 1.1 Human-facing
 
-**In one sentence:** Source stays in this repository, and cookies and settings stay in `~/.app/gemini-wilgat/`, which is a different folder.
+**In one sentence:** Source stays in this repository, and cookies and settings stay in `~/.app/cloud-player/`, which is a different folder.
 
 | Box | Meaning | Example |
 |-----|---------|---------|
@@ -24,7 +24,7 @@ This file owns the two directories people confuse: the source tree, and the runt
 | Surface | What you open | What for |
 |---------|---------------|----------|
 | Repository root | Source and `./build.sh` | Build |
-| `~/.app/gemini-wilgat/` | Runtime data | Config, settings, cookies, userscripts |
+| `~/.app/cloud-player/` | Runtime data | Config, settings, cookies, userscripts |
 
 | You do… | What it means | What you type |
 |---------|---------------|---------------|
@@ -35,7 +35,7 @@ This file owns the two directories people confuse: the source tree, and the runt
 Source repository (milestone 1.0):
 
 ```text
-gemini-wilgat/
+cloud-player/
 ├── README.md
 ├── build.sh
 ├── project.sh
@@ -69,7 +69,7 @@ Paths in C++ come from `PROJECT_ID` and the config getters. A literal `~/.app/gm
 
 ### 2.1 Implementation notes (this project)
 
-`PROJECT_ID` is `gemini-wilgat`. The runtime root is `~/.app/gemini-wilgat/`. The simple-build binary is `target/exe/debug/gemini-wilgat`.
+`PROJECT_ID` is `cloud-player`. The runtime root is `~/.app/cloud-player/`. The simple-build binary is `target/exe/debug/cloud-player`.
 
 ## 3. Protection rule
 

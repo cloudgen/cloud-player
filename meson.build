@@ -1,9 +1,9 @@
-# meson.build — second build for gemini-wilgat.
+# meson.build — second build for cloud-player.
 # Compiles the same C++ sources as ./build.sh.
-# project() version matches the runtime macros in src/main/cpp/project.h (1.0.8).
+# project() version matches the runtime macros in src/main/cpp/project.h (1.1.0).
 
-project('gemini-wilgat', 'cpp',
-    version: '1.0.8',
+project('cloud-player', 'cpp',
+    version: '1.1.0',
     license: 'MIT',
     default_options: [
         'warning_level=3',
@@ -70,7 +70,7 @@ epoxy_dep = dependency('epoxy', required: true)
 egl_dep = dependency('egl', required: true)
 dl_dep = cpp.find_library('dl', required: true)
 
-executable('gemini-wilgat',
+executable('cloud-player',
     sources: src_files,
     include_directories: [sol_inc, mpv_inc],
     dependencies: [

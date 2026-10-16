@@ -16,15 +16,15 @@
 // =========================================================================
 // Project Identification and Metadata
 // =========================================================================
-#define PROJECT_ID      "gemini-wilgat"
-#define PROJECT_NAME    "Gemini (wilgat)"
+#define PROJECT_ID      "cloud-player"
+#define PROJECT_NAME    "cloud-player"
 
 // =========================================================================
 // Version Information
 // =========================================================================
 #define VERSION_MAJOR   1
-#define VERSION_MINOR   0
-#define VERSION_PATCH   8
+#define VERSION_MINOR   1
+#define VERSION_PATCH   0
 
 // =========================================================================
 // Default URLs (Bookmarks & Start Page)
@@ -37,7 +37,7 @@
 // 
 // Note:
 //   Relative path under $HOME. Will be expanded to:
-//   ~/.app/gemini-wilgat/cookies/   (PROJECT_ID)
+//   ~/.app/cloud-player/cookies/   (PROJECT_ID)
 // =========================================================================
 #define PERSISTENCE_STORAGE_PATH ".app/" PROJECT_ID "/cookies"
 

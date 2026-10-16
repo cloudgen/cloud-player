@@ -5,7 +5,7 @@
 
 ## 1. Purpose
 
-This file owns the libraries the gemini-wilgat C++ program compiles and links against, and the apt packages that provide them. `./build.sh install` is the command that requests the apt packages. `./build.sh build` and `meson.build` both request the same link set. How those commands compile stays in the build requirements. How sol2 runs Lua stays in `requirement-cpp-lua-script.md`.
+This file owns the libraries the cloud-player C++ program compiles and links against, and the apt packages that provide them. `./build.sh install` is the command that requests the apt packages. `./build.sh build` and `meson.build` both request the same link set. How those commands compile stays in the build requirements. How sol2 runs Lua stays in `requirement-cpp-lua-script.md`.
 
 ### 1.1 Human-facing
 

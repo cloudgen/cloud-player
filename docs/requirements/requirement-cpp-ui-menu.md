@@ -5,7 +5,7 @@
 
 ## 1. Purpose
 
-This file owns the gemini-wilgat menu bar: the File and About menus, their items, and what activating an item does. `build_main_menu_bar()` in `src/main/cpp/ui_menu_app.cpp` is the only function that builds that bar. Where the bar sits in the window stays in `requirement-cpp-window.md`. The `[bookmarks] enabled` flag stays in `requirement-cpp-configuration.md`. The `user_agent` row stays in `requirement-cpp-database.md`.
+This file owns the cloud-player menu bar: the File and About menus, their items, and what activating an item does. `build_main_menu_bar()` in `src/main/cpp/ui_menu_app.cpp` is the only function that builds that bar. Where the bar sits in the window stays in `requirement-cpp-window.md`. The `[bookmarks] enabled` flag stays in `requirement-cpp-configuration.md`. The `user_agent` row stays in `requirement-cpp-database.md`.
 
 ### 1.1 Human-facing
 

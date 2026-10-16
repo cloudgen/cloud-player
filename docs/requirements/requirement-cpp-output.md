@@ -5,7 +5,7 @@
 
 ## 1. Purpose
 
-All console text from gemini-wilgat goes through `ciao_info`, `ciao_warn`, `ciao_error`, and `ciao_debug`. This file owns those four calls and the quiet and JSON modes. The calls are macros so the dated line can name the source file. That stored line is `requirement-cpp-logger.md`. The directory of that file is `requirement-cpp-logger-folder.md`. Both of those rows are Deferred.
+All console text from cloud-player goes through `ciao_info`, `ciao_warn`, `ciao_error`, and `ciao_debug`. This file owns those four calls and the quiet and JSON modes. The calls are macros so the dated line can name the source file. That stored line is `requirement-cpp-logger.md`. The directory of that file is `requirement-cpp-logger-folder.md`. Both of those rows are Deferred.
 
 ### 1.1 Human-facing
 

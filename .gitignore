@@ -1,16 +1,16 @@
 # =============================================
-# gemini-wilgat .gitignore
+# cloud-player .gitignore
 # =============================================
 
 # Build output directories
 target/
 build/
 builddir/
-gemini-wilgat
+cloud-player
 
 # Binary executables
-gemini-wilgat
-gemini_wilgat
+cloud-player
+cloud_player
 *.exe
 
 # =============================================

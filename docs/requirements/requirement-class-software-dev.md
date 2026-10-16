@@ -11,12 +11,12 @@ This workspace is a software product people install and run: a native GTK window
 
 ### 1.1 Human-facing
 
-**In one sentence:** You run gemini-wilgat on Linux Desktop; the program opens a Gemini page in a GTK window and can name Windows, macOS, or Linux Desktop; this file only records what kind of software project this folder is.
+**In one sentence:** You run cloud-player on Linux Desktop; the program opens a Gemini page in a GTK window and can name Windows, macOS, or Linux Desktop; this file only records what kind of software project this folder is.
 
 | Box | Meaning | Example |
 |-----|---------|---------|
 | You / this login | The person who builds or launches the window | `./build.sh build` then run the binary |
-| The other role | The window itself | It shows Gemini and stores cookies under `~/.app/gemini-wilgat/` |
+| The other role | The window itself | It shows Gemini and stores cookies under `~/.app/cloud-player/` |
 | Not this file | Feature behavior, build commands, and coding rules | Those live in the peer requirements |
 
 | Includes | Excludes |
@@ -49,8 +49,8 @@ This workspace is a software product people install and run: a native GTK window
 
 ### 2.1 Implementation notes (this project)
 
-- Display name: `Gemini (wilgat)` (`PROJECT_NAME` in `src/main/cpp/project.h`).
-- Runtime id: `gemini-wilgat` (`PROJECT_ID`).
+- Display name: `cloud-player` (`PROJECT_NAME` in `src/main/cpp/project.h`).
+- Runtime id: `cloud-player` (`PROJECT_ID`).
 - Start page: `https://gemini.google.com` (`START_PAGE`). Owned in detail by `requirement-cpp-window.md`.
 - Version macros in `project.h` are the runtime version. `project.ini` `VERSION` is the build-script version and may differ until those two files are aligned.
 - This folder is not a git repository. No origin URL is recorded.

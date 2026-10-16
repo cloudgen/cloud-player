@@ -1,6 +1,6 @@
 **file**: docs/requirements/requirement-cpp-skills-installation-meson.md
 **Status**: Active
-**Updated**: 2026-10-11
+**Updated**: 2026-10-16
 **Philosophy**: CIAO v2.10.2 / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
 
 ## 1. Purpose
@@ -9,7 +9,7 @@ This file owns `meson.build`. Meson compiles the same C++ sources as `./build.sh
 
 ### 1.1 Human-facing
 
-**In one sentence:** You can compile gemini-wilgat with Meson, and that build compiles every `src/main/cpp/*.cpp` file.
+**In one sentence:** You can compile cloud-player with Meson, and that build compiles every `src/main/cpp/*.cpp` file.
 
 | Box | Meaning | Example |
 |-----|---------|---------|
@@ -24,7 +24,7 @@ This file owns `meson.build`. Meson compiles the same C++ sources as `./build.sh
 | Surface | What you open | What for |
 |---------|---------------|----------|
 | `meson.build` | Build definition | Sources and dependencies |
-| `builddir` | Meson output | The `gemini-wilgat` executable |
+| `builddir` | Meson output | The `cloud-player` executable |
 
 | You do… | What it means | What you type |
 |---------|---------------|---------------|
@@ -32,8 +32,8 @@ This file owns `meson.build`. Meson compiles the same C++ sources as `./build.sh
 
 ## 2. Core rules
 
-- `project()` name is `gemini-wilgat`. The language is C++17.
-- The executable name is `gemini-wilgat`.
+- `project()` name is `cloud-player`. The language is C++17.
+- The executable name is `cloud-player`.
 - `dependency()` entries are the link set in `requirement-cpp-dependencies.md`, each `required: true`, including `threads`.
 - C++ include directory: `/usr/local/include` so `sol/sol.hpp` resolves. What that header is for is owned by `requirement-cpp-lua-script.md`.
 - Sources are every `src/main/cpp/*.cpp` file.
@@ -75,7 +75,7 @@ Current sources:
 - `src/main/cpp/userscript_manager.cpp`
 - `src/main/cpp/video_player.cpp`
 
-The `project()` version is 1.0.8, the same numbers as the `project.h` macros and `project.ini` `VERSION`. libmpv is linked from `third_party/libmpv/usr/lib/` plus `gcc -print-multiarch`.
+The `project()` version is 1.1.0, the same numbers as the `project.h` macros and `project.ini` `VERSION`. libmpv is linked from `third_party/libmpv/usr/lib/` plus `gcc -print-multiarch`.
 
 ## 3. Protection rule
 
@@ -92,5 +92,5 @@ Future editors must not drop `userscript_manager.cpp` from `meson.build` while `
 | `docs/requirements/requirement-cpp-lua-script.md` | sol2 binding those headers provide |
 | `docs/requirements/requirement-cpp-dependencies.md` | Link set those `dependency()` calls must match |
 
-**Last updated**: 2026-10-04
+**Last updated**: 2026-10-16
 **Owner**: Meson build

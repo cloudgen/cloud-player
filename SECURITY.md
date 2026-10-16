@@ -4,7 +4,9 @@
 
 | Version | Supported |
 |---------|-----------|
-| 1.0.7 (current) | Yes |
+| 1.1.0 (current) | Yes |
+| 1.0.8 | Yes |
+| 1.0.7 | Yes |
 | Older releases | Not published from this repository |
 
 ## Reporting a Vulnerability

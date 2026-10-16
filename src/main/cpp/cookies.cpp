@@ -153,7 +153,7 @@ static void ciao_create_storage_directories(const char *path)
 //   - Even when PROJECT_ID and config logic are correct, a single subtle bug 
 //     in tilde expansion (g_str_has_prefix + base+2) can produce invalid paths 
 //     like "/home/user/~/.app/..." — breaking cookie reuse between old backups 
-//     and the current gemini-wilgat binary.
+//     and the current cloud-player binary.
 //   - Missing the trailing "/cookies/" subdirectory made the path completely wrong.
 //   - This kind of path bug is extremely hard to spot without visible debug output.
 //   - Always make the final resolved path and cookie count visible on startup 

@@ -1,6 +1,6 @@
 #!/bin/bash
 # Export project variables
-export PRJ=gemini-wilgat
+export PRJ=cloud-player
 export SRC=src
 export SRC_C=$SRC/main/c
 export SRC_CPP=$SRC/main/cpp

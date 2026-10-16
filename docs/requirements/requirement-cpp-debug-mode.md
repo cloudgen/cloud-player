@@ -9,7 +9,7 @@ The C++ userscript loader must show its important runtime values when debug mode
 
 ### 1.1 Human-facing
 
-**In one sentence:** You start gemini-wilgat with `DEBUG=1` and the terminal shows the userscript loader's enabled flag, state, path, each script's priority and match, and the URL that did or did not run a hook.
+**In one sentence:** You start cloud-player with `DEBUG=1` and the terminal shows the userscript loader's enabled flag, state, path, each script's priority and match, and the URL that did or did not run a hook.
 
 | Box | Meaning | Example |
 |-----|---------|---------|
@@ -28,7 +28,7 @@ The C++ userscript loader must show its important runtime values when debug mode
 
 | You do… | What it means | What you type |
 |---------|---------------|---------------|
-| Inspect the loader | Debug is on and quiet is off, so each important value is printed | `DEBUG=1 ./target/exe/debug/gemini-wilgat` |
+| Inspect the loader | Debug is on and quiet is off, so each important value is printed | `DEBUG=1 ./target/exe/debug/cloud-player` |
 
 ## 2. Core rules
 

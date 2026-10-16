@@ -1,6 +1,6 @@
 # Tests
 
-Full-program checks for gemini-wilgat. Each assert names a TP id from `docs/reviews/test-plan.md`.
+Full-program checks for cloud-player. Each assert names a TP id from `docs/reviews/test-plan.md`.
 
 | File | TP ids |
 |------|--------|

@@ -152,6 +152,108 @@ static void on_reload_clicked(GtkButton *button, gpointer user_data)
 }
 
 // ──────────────────────────────────────────────
+// on_open_file_clicked() - Choose a local file and set its URL
+// ──────────────────────────────────────────────
+//
+// Purpose:
+//   Opens a local file chooser beside the navigation buttons.
+//   The chosen file is written into the URL entry as its file URI,
+//   then the same action as the Go button runs.
+//
+// Parameters:
+//   Input:
+//     - button    : GtkButton* - The Open File button (unused)
+//     - user_data : gpointer - Expected to be GtkEntry* (the URL entry)
+//   Output/Return: None
+//
+// Dependencies:
+//   - Functions called: gtk_widget_get_toplevel(), gtk_file_chooser_dialog_new(),
+//     gtk_file_chooser_set_local_only(), gtk_file_chooser_get_uri(),
+//     gtk_dialog_run(), gtk_widget_destroy(), gtk_entry_set_text(),
+//     gtk_entry_get_text(), g_filename_from_uri(), on_go_button_clicked(),
+//     ciao_warn(), ciao_error(), ciao_info()
+//   - Headers required: gtk/gtk.h, url_bar_callbacks.h, output.h
+//
+// Why This Design:
+//   The button sits beside Back, Forward, and Reload. Navigation stays in
+//   on_go_button_clicked(), so .mp4 playback, local .log checks, and page
+//   loads keep one path. The chooser is destroyed before that path runs.
+//
+// CIAO PRINCIPLES APPLIED:
+//   Principle 1  (Caution)               - Checks the entry, the dialog, and the URI
+//   Principle 5  (Single Point of Entry) - Opening still goes through on_go_button_clicked()
+//   Principle 18 (Protect Against AI & Human Modification)
+//
+// Protection Rule:
+//   This callback is file-local. Cancel and closing the chooser leave the
+//   URL entry unchanged. Do not navigate before the chooser is destroyed.
+//
+// Last updated: 2026-10-16
+// ──────────────────────────────────────────────
+static void on_open_file_clicked(GtkButton *button, gpointer user_data)
+{
+    (void)button;
+
+    if (!GTK_IS_ENTRY(user_data)) {
+        ciao_warn("on_open_file_clicked: url entry is invalid");
+        return;
+    }
+    GtkEntry *entry = GTK_ENTRY(user_data);
+
+    GtkWindow *parent = NULL;
+    GtkWidget *toplevel = gtk_widget_get_toplevel(GTK_WIDGET(entry));
+    if (GTK_IS_WINDOW(toplevel)) {
+        parent = GTK_WINDOW(toplevel);
+    }
+
+    GtkWidget *dialog = gtk_file_chooser_dialog_new(
+        "Open File",
+        parent,
+        GTK_FILE_CHOOSER_ACTION_OPEN,
+        "_Cancel", GTK_RESPONSE_CANCEL,
+        "_Open", GTK_RESPONSE_ACCEPT,
+        NULL);
+    if (dialog == NULL) {
+        ciao_error("on_open_file_clicked: file chooser dialog is NULL");
+        return;
+    }
+
+    GtkFileChooser *chooser = GTK_FILE_CHOOSER(dialog);
+    gtk_file_chooser_set_local_only(chooser, TRUE);
+    gtk_file_chooser_set_select_multiple(chooser, FALSE);
+
+    const gchar *current = gtk_entry_get_text(entry);
+    if (current != NULL && g_str_has_prefix(current, "file:")) {
+        gchar *path = g_filename_from_uri(current, NULL, NULL);
+        if (path != NULL) {
+            gtk_file_chooser_set_filename(chooser, path);
+            g_free(path);
+        }
+    }
+
+    gint response = gtk_dialog_run(GTK_DIALOG(dialog));
+    gchar *uri = NULL;
+    if (response == GTK_RESPONSE_ACCEPT) {
+        uri = gtk_file_chooser_get_uri(chooser);
+    }
+    gtk_widget_destroy(dialog);
+
+    if (response != GTK_RESPONSE_ACCEPT) {
+        return;
+    }
+    if (uri == NULL || uri[0] == '\0') {
+        ciao_warn("on_open_file_clicked: file chooser returned an empty URI");
+        g_free(uri);
+        return;
+    }
+
+    gtk_entry_set_text(entry, uri);
+    ciao_info("Open file set URL to: %s", uri);
+    g_free(uri);
+    on_go_button_clicked(NULL, entry);
+}
+
+// ──────────────────────────────────────────────
 // on_navigation_buttons_update() - Update Back/Forward button sensitivity
 // ──────────────────────────────────────────────
 //
@@ -317,6 +419,13 @@ UrlBarUserAgent add_url_bar_user_agent(WebKitWebView *web_view,
 
     GtkWidget *go_button = gtk_button_new_with_label("Go");
 
+    // Open File stays clickable when Back / Forward / Reload are disabled.
+    GtkWidget *open_file_btn = gtk_button_new_with_label("Open File");
+    gtk_widget_set_tooltip_text(open_file_btn,
+        "Choose a local file and put its address in the URL bar");
+    g_signal_connect(open_file_btn, "clicked",
+        G_CALLBACK(on_open_file_clicked), url_bar.url_entry);
+
     g_signal_connect(go_button, "clicked", 
         G_CALLBACK(on_go_button_clicked), url_bar.url_entry);
 
@@ -338,9 +447,10 @@ UrlBarUserAgent add_url_bar_user_agent(WebKitWebView *web_view,
     // ====================================================================
     url_bar.url_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
 
-    gtk_box_pack_start(GTK_BOX(url_bar.url_box), back_btn,    FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(url_bar.url_box), forward_btn, FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(url_bar.url_box), reload_btn,  FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(url_bar.url_box), back_btn,      FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(url_bar.url_box), forward_btn,   FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(url_bar.url_box), reload_btn,    FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(url_bar.url_box), open_file_btn, FALSE, FALSE, 0);
 
     gtk_box_pack_start(GTK_BOX(url_bar.url_box), 
                       GTK_WIDGET(url_bar.url_entry), TRUE, TRUE, 0);

@@ -5,7 +5,7 @@
 
 ## 1. Purpose
 
-This file owns every command-line flag, the `log` verb, the `luascript` verb, the `desktop` verb, the `logcheck` verb, the `desktopcheck` verb, and every environment variable the gemini-wilgat binary accepts. `ciao_print_help()` must list each of them. The `log` actions are `requirement-cpp-log-commands.md`. The `luascript` actions are `requirement-cpp-lua-script-commands.md`. `logcheck` is `requirement-cpp-log-format.md`. `desktop` and `desktopcheck` are `requirement-cpp-desktop.md`.
+This file owns every command-line flag, the `log` verb, the `luascript` verb, the `desktop` verb, the `logcheck` verb, the `desktopcheck` verb, and every environment variable the cloud-player binary accepts. `ciao_print_help()` must list each of them. The `log` actions are `requirement-cpp-log-commands.md`. The `luascript` actions are `requirement-cpp-lua-script-commands.md`. `logcheck` is `requirement-cpp-log-format.md`. `desktop` and `desktopcheck` are `requirement-cpp-desktop.md`.
 
 ### 1.1 Human-facing
 
@@ -28,12 +28,12 @@ This file owns every command-line flag, the `log` verb, the `luascript` verb, th
 
 | You do… | What it means | What you type |
 |---------|---------------|---------------|
-| Read the list | Help shows every row below | `gemini-wilgat help` |
-| Run `log` | The verb stops before the window | `gemini-wilgat log list` |
-| Run `luascript` | The verb stops before the window | `gemini-wilgat luascript folder` |
-| Run `logcheck` | The test-purpose verb stops before the window | `gemini-wilgat logcheck --home /tmp --log-datestamp 20261003` |
-| Run `desktop` | The verb prints one name and stops before the window | `gemini-wilgat desktop` |
-| Run `desktopcheck` | The test-purpose verb names a supplied desktop and stops | `gemini-wilgat desktopcheck --os linux --display :0` |
+| Read the list | Help shows every row below | `cloud-player help` |
+| Run `log` | The verb stops before the window | `cloud-player log list` |
+| Run `luascript` | The verb stops before the window | `cloud-player luascript folder` |
+| Run `logcheck` | The test-purpose verb stops before the window | `cloud-player logcheck --home /tmp --log-datestamp 20261003` |
+| Run `desktop` | The verb prints one name and stops before the window | `cloud-player desktop` |
+| Run `desktopcheck` | The test-purpose verb names a supplied desktop and stops | `cloud-player desktopcheck --os linux --display :0` |
 | Exit after a delay | The timer is armed before the window | `--shutdown=30` |
 
 ## 2. Core rules

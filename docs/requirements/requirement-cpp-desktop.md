@@ -13,7 +13,7 @@ This file owns the one decision that names the desktop: Windows, macOS, or Linux
 
 | Box | Meaning | Example |
 |-----|---------|---------|
-| You / this login | The person who asks which desktop this is | You run `gemini-wilgat desktop` |
+| You / this login | The person who asks which desktop this is | You run `cloud-player desktop` |
 | The other role | The decision in `desktop_env.cpp` | It returns one of the three names, or `unknown` |
 | Not this file | How the X11 window is prepared, and what a macOS build is | `requirement-cpp-linux-x11.md` and `requirement-cpp-macos.md` |
 
@@ -28,9 +28,9 @@ This file owns the one decision that names the desktop: Windows, macOS, or Linux
 
 | You do… | What it means | What you type |
 |---------|---------------|---------------|
-| Ask this process | The answer is one token and the process exits | `gemini-wilgat desktop` |
-| Ask for another desktop | The answer does not use this process's display | `gemini-wilgat desktopcheck --os macos` |
-| Open the window | The title ends with the desktop label | `gemini-wilgat` on Linux Desktop |
+| Ask this process | The answer is one token and the process exits | `cloud-player desktop` |
+| Ask for another desktop | The answer does not use this process's display | `cloud-player desktopcheck --os macos` |
+| Open the window | The title ends with the desktop label | `cloud-player` on Linux Desktop |
 
 ## 2. Core rules
 
@@ -59,14 +59,14 @@ A Windows or macOS compile does not open this GTK window. It can still answer `d
 
 ### 2.1 Implementation notes (this project)
 
-Binary: `gemini-wilgat`. The decision lives in `src/main/cpp/desktop_env.cpp`.
+Binary: `cloud-player`. The decision lives in `src/main/cpp/desktop_env.cpp`.
 
 ```text
-gemini-wilgat desktop
-gemini-wilgat desktopcheck --os windows
-gemini-wilgat desktopcheck --os macos
-gemini-wilgat desktopcheck --os linux --display :0
-gemini-wilgat --json desktopcheck --os macos
+cloud-player desktop
+cloud-player desktopcheck --os windows
+cloud-player desktopcheck --os macos
+cloud-player desktopcheck --os linux --display :0
+cloud-player --json desktopcheck --os macos
 ```
 
 ### 2.2 Why this requirement exists

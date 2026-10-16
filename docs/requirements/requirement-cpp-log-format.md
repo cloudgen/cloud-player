@@ -23,14 +23,14 @@ This file owns the checker that decides whether a log file follows the stored li
 
 | Surface | What you open | What for |
 |---------|---------------|----------|
-| The terminal | `gemini-wilgat logcheck ...` | Pass or fail, then stop |
+| The terminal | `cloud-player logcheck ...` | Pass or fail, then stop |
 | The address bar | A local `.log` path, then Go | The same table as File → Log when the checker passes |
 
 | You do… | What it means | What you type |
 |---------|---------------|---------------|
-| Check one file | Pass prints the path and exits 0. Fail names the line and exits 1 | `gemini-wilgat logcheck --file /tmp/gemini-wilgat-20261003.log` |
-| Aim a rehearsal | The dated file is chosen by the directory switch and the eight-digit stamp. The login home is not read | `gemini-wilgat logcheck --home /tmp --log-datestamp 20261003` |
-| Open it in the window | Go loads the log table only after a pass | Type `/tmp/gemini-wilgat-20261003.log` and press Go |
+| Check one file | Pass prints the path and exits 0. Fail names the line and exits 1 | `cloud-player logcheck --file /tmp/cloud-player-20261003.log` |
+| Aim a rehearsal | The dated file is chosen by the directory switch and the eight-digit stamp. The login home is not read | `cloud-player logcheck --home /tmp --log-datestamp 20261003` |
+| Open it in the window | Go loads the log table only after a pass | Type `/tmp/cloud-player-20261003.log` and press Go |
 
 ## 2. Core rules
 
@@ -58,7 +58,7 @@ A file passes when every non-empty line is a stored line and at least one stored
 A passing file:
 
 ```text
-[2026-10-03 17:35:02] pid:1001 [INFO] @output.cpp :] Gemini (wilgat) Output System initialized (GNOME compliant)
+[2026-10-03 17:35:02] pid:1001 [INFO] @output.cpp :] cloud-player Output System initialized (GNOME compliant)
 [2026-10-03 17:35:02] pid:1001 [WARNING] @ui_window_app.cpp :] Bookmark index 1 out of range, falling back to Start Page
 [2026-10-03 17:35:02] pid:1001 [INFO] :] no component
 ```
@@ -83,8 +83,8 @@ One of these forms:
 | Form | File that is checked |
 |------|----------------------|
 | `logcheck --file <path>` | That path. The base name must end in `.log`. |
-| `logcheck --home <dir> --log-datestamp <YYYYMMDD>` | `<dir>/.app/gemini-wilgat/log/gemini-wilgat-<YYYYMMDD>.log` |
-| `logcheck --prefix <dir> --log-datestamp <YYYYMMDD>` | `<dir>/var/gemini-wilgat/log/gemini-wilgat-<YYYYMMDD>.log` |
+| `logcheck --home <dir> --log-datestamp <YYYYMMDD>` | `<dir>/.app/cloud-player/log/cloud-player-<YYYYMMDD>.log` |
+| `logcheck --prefix <dir> --log-datestamp <YYYYMMDD>` | `<dir>/var/cloud-player/log/cloud-player-<YYYYMMDD>.log` |
 
 `--prefix` wins when both directory switches are present. The other directory is not read. `--file` together with `--home` or `--prefix` exits 1 with `logcheck accepts either --file or --home or --prefix`. `--file` together with `--log-datestamp` exits 1 with `logcheck --file does not use --log-datestamp`.
 
@@ -107,7 +107,7 @@ log format fail <path>: line 2 does not follow the stored line
 Text usage and read errors go to stderr through `g_printerr` and exit 1. JSON is one object on stdout. A pass:
 
 ```json
-{"command":"logcheck","result":"pass","path":"/tmp/.app/gemini-wilgat/log/gemini-wilgat-20261003.log"}
+{"command":"logcheck","result":"pass","path":"/tmp/.app/cloud-player/log/cloud-player-20261003.log"}
 ```
 
 A format fail:
@@ -119,7 +119,7 @@ A format fail:
 A usage or read error:
 
 ```json
-{"command":"logcheck","error":"cannot read log file gemini-wilgat-20261003.log"}
+{"command":"logcheck","error":"cannot read log file cloud-player-20261003.log"}
 ```
 
 `logcheck` alone is not a usage page. It exits 1 with `logcheck requires --file or --home or --prefix`.

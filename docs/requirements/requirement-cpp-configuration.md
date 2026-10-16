@@ -9,7 +9,7 @@ This file owns `config.conf`: where it lives, what happens when it is missing, a
 
 ### 1.1 Human-facing
 
-**In one sentence:** On first launch the program writes `~/.app/gemini-wilgat/config.conf` for you, and you edit that file to change window size and storage names.
+**In one sentence:** On first launch the program writes `~/.app/cloud-player/config.conf` for you, and you edit that file to change window size and storage names.
 
 | Box | Meaning | Example |
 |-----|---------|---------|
@@ -23,7 +23,7 @@ This file owns `config.conf`: where it lives, what happens when it is missing, a
 
 | Surface | What you open | What for |
 |---------|---------------|----------|
-| `~/.app/gemini-wilgat/config.conf` | User config | Runtime flags |
+| `~/.app/cloud-player/config.conf` | User config | Runtime flags |
 | `--config <path>` | Optional override | A different file |
 
 | You do… | What it means | What you type |
@@ -54,19 +54,19 @@ The INI reader must strip one matching pair of `"` or `'` around a value. A valu
 
 ```ini
 cookies_filename = cookies.sqlite
-base_path = ~/.app/gemini-wilgat
-window_title = Gemini (wilgat)
+base_path = ~/.app/cloud-player
+window_title = cloud-player
 ```
 
 Defaults live only as macros in `config.h`. `config_init()` and the writer of the default file both read those macros.
 
 ### 2.1 Implementation notes (this project)
 
-`PROJECT_ID` is `gemini-wilgat`. The file is `~/.app/gemini-wilgat/config.conf`.
+`PROJECT_ID` is `cloud-player`. The file is `~/.app/cloud-player/config.conf`.
 
 ```ini
 [core]
-window_title = Gemini (wilgat)
+window_title = cloud-player
 default_width = 1200
 default_height = 800
 
@@ -76,7 +76,7 @@ show_user_agent_label = true
 navigation_buttons_enabled = true
 
 [storage]
-base_path = ~/.app/gemini-wilgat
+base_path = ~/.app/cloud-player
 cookies_enabled = true
 cookies_filename = cookies.sqlite
 settings_filename = settings.sqlite
@@ -91,7 +91,7 @@ enabled = true
 
 [scripts]
 enabled = true
-path = ~/.app/gemini-wilgat/userscripts
+path = ~/.app/cloud-player/userscripts
 
 [parameters]
 shutdown_seconds = 0
@@ -102,7 +102,7 @@ bookmark_index = 0
 
 | TP-ID | Pass |
 |-------|------|
-| TP-CONFIG-CREATE | A first launch with no config file creates `~/.app/gemini-wilgat/config.conf` and the window still opens |
+| TP-CONFIG-CREATE | A first launch with no config file creates `~/.app/cloud-player/config.conf` and the window still opens |
 
 ## 3. Protection rule
 

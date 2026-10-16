@@ -9,7 +9,7 @@ This file owns the persistent cookie file so a Gemini login can survive a restar
 
 ### 1.1 Human-facing
 
-**In one sentence:** You stay logged in because cookies are written to `~/.app/gemini-wilgat/cookies/cookies.sqlite` before the first page loads.
+**In one sentence:** You stay logged in because cookies are written to `~/.app/cloud-player/cookies/cookies.sqlite` before the first page loads.
 
 | Box | Meaning | Example |
 |-----|---------|---------|
@@ -23,7 +23,7 @@ This file owns the persistent cookie file so a Gemini login can survive a restar
 
 | Surface | What you open | What for |
 |---------|---------------|----------|
-| `~/.app/gemini-wilgat/cookies/cookies.sqlite` | Cookie jar | Session cookies |
+| `~/.app/cloud-player/cookies/cookies.sqlite` | Cookie jar | Session cookies |
 | The terminal with `DEBUG=1` | Debug log | Cookie count |
 
 | You do… | What it means | What you type |
@@ -40,7 +40,7 @@ This file owns the persistent cookie file so a Gemini login can survive a restar
 
 ### 2.1 Implementation notes (this project)
 
-The file is `~/.app/gemini-wilgat/cookies/cookies.sqlite`.
+The file is `~/.app/cloud-player/cookies/cookies.sqlite`.
 
 ### 2.2 Verification
 

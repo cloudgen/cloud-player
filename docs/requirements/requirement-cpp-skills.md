@@ -5,7 +5,7 @@
 
 ## 1. Purpose
 
-A pluggable skill manager (enable, disable, and order service modules from config) is not in the gemini-wilgat binary. The live way to extend the window is Lua userscripts, owned by `requirement-cpp-window.md`. The C++ host uses sol2, owned by `requirement-cpp-lua-script.md`.
+A pluggable skill manager (enable, disable, and order service modules from config) is not in the cloud-player binary. The live way to extend the window is Lua userscripts, owned by `requirement-cpp-window.md`. The C++ host uses sol2, owned by `requirement-cpp-lua-script.md`.
 
 ### 1.1 Human-facing
 
@@ -23,7 +23,7 @@ A pluggable skill manager (enable, disable, and order service modules from confi
 
 | Surface | What you open | What for |
 |---------|---------------|----------|
-| `~/.app/gemini-wilgat/userscripts/` | Current extension point | Lua hooks |
+| `~/.app/cloud-player/userscripts/` | Current extension point | Lua hooks |
 | `docs/requirements/index.md` | Status | This row is Deferred |
 
 | You do… | What it means | What you type |

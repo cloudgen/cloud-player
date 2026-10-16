@@ -9,7 +9,7 @@ This file owns the line stored in the dated log file and the five project log co
 
 ### 1.1 Human-facing
 
-**In one sentence:** The stored line reads `[YYYY-MM-DD HH:MM:SS] pid:<pid> [LEVEL] @<file> :] message`, where `<file>` is the source file that logged it, and the file that holds the line is `gemini-wilgat-<YYYYMMDD>.log`.
+**In one sentence:** The stored line reads `[YYYY-MM-DD HH:MM:SS] pid:<pid> [LEVEL] @<file> :] message`, where `<file>` is the source file that logged it, and the file that holds the line is `cloud-player-<YYYYMMDD>.log`.
 
 | Box | Meaning | Example |
 |-----|---------|---------|
@@ -19,17 +19,17 @@ This file owns the line stored in the dated log file and the five project log co
 
 | Includes | Excludes |
 |----------|----------|
-| The stored line, the file `gemini-wilgat-<YYYYMMDD>.log`, and the rehearsal commands `test`, `list`, and `show` | The terminal tokens `[INFO]`, `[WARN]`, `[ERROR]`, and `[DEBUG]`, and which directory the login selects |
+| The stored line, the file `cloud-player-<YYYYMMDD>.log`, and the rehearsal commands `test`, `list`, and `show` | The terminal tokens `[INFO]`, `[WARN]`, `[ERROR]`, and `[DEBUG]`, and which directory the login selects |
 
 | Surface | What you open | What for |
 |---------|---------------|----------|
-| The log file | `gemini-wilgat-<YYYYMMDD>.log` | Read the stored line |
+| The log file | `cloud-player-<YYYYMMDD>.log` | Read the stored line |
 | `src/main/cpp/output.cpp` | `ciao_log` | The call that appends |
 | `--log-datestamp` | Eight digits | Choose the date in the file name |
 
 | You do… | What it means | What you type |
 |---------|---------------|---------------|
-| Rehearse one line | One practice line is stored under the directory you name | `gemini-wilgat test --home /tmp --log-datestamp 20261003` |
+| Rehearse one line | One practice line is stored under the directory you name | `cloud-player test --home /tmp --log-datestamp 20261003` |
 
 ## 2. Core rules
 
@@ -56,7 +56,7 @@ Local time, the process id, the level, the component, then the message. One line
 | `<message>` | The formatted text only. No extra brackets and no second timestamp. |
 
 ```text
-[2026-10-03 17:35:02] pid:1001 [INFO] @output.cpp :] Gemini (wilgat) Output System initialized (GNOME compliant)
+[2026-10-03 17:35:02] pid:1001 [INFO] @output.cpp :] cloud-player Output System initialized (GNOME compliant)
 [2026-10-03 17:35:02] pid:1001 [WARNING] @ui_window_app.cpp :] Bookmark index 1 out of range, falling back to Start Page
 [2026-10-03 17:35:02] pid:1001 [ERROR] @main.cpp :] Critical: Failed to initialize WebKit
 [2026-10-03 17:35:02] pid:1001 [DEBUG] @webkit_setup.cpp :] Starting WebKit setup...
@@ -91,22 +91,22 @@ Quiet and JSON do not drop a matching line from the file. The stored shape stays
 
 ### 2.3 Dated file
 
-The file is `gemini-wilgat-<YYYYMMDD>.log` inside the log directory, or inside the rehearsal log directory when the command is `test`, `list`, or `show`. Those directories are `requirement-cpp-logger-folder.md`. The check that reads the file is `TP-CPP-LOGGER` in `docs/reviews/test-plan.md` and `requirement-cpp-tests.md`.
+The file is `cloud-player-<YYYYMMDD>.log` inside the log directory, or inside the rehearsal log directory when the command is `test`, `list`, or `show`. Those directories are `requirement-cpp-logger-folder.md`. The check that reads the file is `TP-CPP-LOGGER` in `docs/reviews/test-plan.md` and `requirement-cpp-tests.md`.
 
 | Environment or switch | File for `20261003` |
 |-----------------------|---------------------|
-| Root or sudo | `/var/gemini-wilgat/log/gemini-wilgat-20261003.log` |
-| Other | `$HOME/.app/gemini-wilgat/log/gemini-wilgat-20261003.log` |
-| `test --prefix /tmp` | `/tmp/var/gemini-wilgat/log/gemini-wilgat-20261003.log` |
-| `test --home /tmp` | `/tmp/.app/gemini-wilgat/log/gemini-wilgat-20261003.log` |
+| Root or sudo | `/var/cloud-player/log/cloud-player-20261003.log` |
+| Other | `$HOME/.app/cloud-player/log/cloud-player-20261003.log` |
+| `test --prefix /tmp` | `/tmp/var/cloud-player/log/cloud-player-20261003.log` |
+| `test --home /tmp` | `/tmp/.app/cloud-player/log/cloud-player-20261003.log` |
 
-1. The file name is `gemini-wilgat-<YYYYMMDD>.log`. It sits in the log directory on a normal run and in the rehearsal log directory on `test`, `list`, and `show`. `--home /tmp` and `--prefix /tmp` do not share a file.
+1. The file name is `cloud-player-<YYYYMMDD>.log`. It sits in the log directory on a normal run and in the rehearsal log directory on `test`, `list`, and `show`. `--home /tmp` and `--prefix /tmp` do not share a file.
 2. `--log-datestamp` is eight digits. Any other shape is rejected with `--log-datestamp requires YYYYMMDD`. When the switch is absent on a normal run, the stamp is today's local date, `YYYYMMDD`. Clock failure uses `19700101`.
 3. The `test` command and the `show` command require the switch. A missing switch is rejected with `test purpose command requires --log-datestamp YYYYMMDD`. They do not substitute today's date. `list` does not require it.
 4. Each event that `ciao_log` emits is appended to this file as the stored line in §2.1. A **gnome-debug** line is one of those events. The output module records it. A direct `g_warning` that never reaches `ciao_log` does not satisfy §2.2. The console line is unchanged. The program creates the log directory when it appends. It does not use `mkstemp`. `list` and `show` do not append a line.
 5. When the log directory is unresolved, no file is created.
 6. `list` prints the basenames of regular files whose names end in `.log`, one per line, in sorted order. A directory or other non-regular name is omitted. A missing directory prints no names and exits 0. It does not create the directory. A directory that exists but cannot be opened exits 1. `list` and `show` do not change the file.
-7. `show` prints the contents of `gemini-wilgat-<YYYYMMDD>.log` for the given datestamp. A missing file exits 1. `list` and `show` use the same directory switches as `test`. `--prefix` wins when both directory switches are present. They do not read `PREFIX`, `HOME`, or the effective user id. Quiet, JSON, and a missing verbose flag do not hide these prints. The display gate for terminal log lines is `requirement-cpp-output.md`.
+7. `show` prints the contents of `cloud-player-<YYYYMMDD>.log` for the given datestamp. A missing file exits 1. `list` and `show` use the same directory switches as `test`. `--prefix` wins when both directory switches are present. They do not read `PREFIX`, `HOME`, or the effective user id. Quiet, JSON, and a missing verbose flag do not hide these prints. The display gate for terminal log lines is `requirement-cpp-output.md`.
 
 `test`, `list`, and `show` are not in the help text while this row is Deferred. `requirement-cpp-parameters.md` keeps the flags the program accepts today. The live `log` verb is `requirement-cpp-log-commands.md`. It is not these three commands, and it does not accept `--log-datestamp`, `--home`, or `--prefix`.
 

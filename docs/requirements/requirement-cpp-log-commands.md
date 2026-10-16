@@ -24,7 +24,7 @@ This file owns the File → Log menu and the `log` command. The stored line stay
 | Surface | What you open | What for |
 |---------|---------------|----------|
 | File → Log | The menu | List, folder, and clear |
-| The terminal | `gemini-wilgat log ...` | The same actions, with or without `--json` |
+| The terminal | `cloud-player log ...` | The same actions, with or without `--json` |
 
 | You do… | What it means | What you type |
 |---------|---------------|---------------|
@@ -35,7 +35,7 @@ This file owns the File → Log menu and the `log` command. The stored line stay
 
 ## 2. Core rules
 
-The directory is the one already resolved by `logger_resolve_dir()` in `src/main/cpp/output.cpp`. Root or sudo (effective user id 0) uses `/var/gemini-wilgat/log`. Every other user uses `$HOME/.app/gemini-wilgat/log`. An empty or unset `HOME` on a non-root process leaves the directory unresolved. These commands do not accept `--home`, `--prefix`, or `--log-datestamp`. They do not call `getpwuid`. They do not create the directory.
+The directory is the one already resolved by `logger_resolve_dir()` in `src/main/cpp/output.cpp`. Root or sudo (effective user id 0) uses `/var/cloud-player/log`. Every other user uses `$HOME/.app/cloud-player/log`. An empty or unset `HOME` on a non-root process leaves the directory unresolved. These commands do not accept `--home`, `--prefix`, or `--log-datestamp`. They do not call `getpwuid`. They do not create the directory.
 
 A log file is a regular file in that directory whose basename ends in `.log`. A name containing `/` is ignored. `.` and `..` are not entries. A symbolic link is not a regular file and is left in place. Any other name is left in place. The directory itself is not deleted.
 
@@ -43,7 +43,7 @@ Names are sorted by basename ascending, byte order. Numbers start at 1 in that o
 
 The verb is the argument `log`. Flags may sit before it, after it, or between it and the action (`--json log list`, `log list --json`, `log --json show 2`). `--json` and `JSON=1` select one JSON object on stdout for this verb. `--quiet` and `QUIET=1` do not hide the result. The result does not go through `ciao_log`, so it is not stored and it does not create the directory.
 
-`ciao_output_init()` exits after flags are applied, before the output-system startup lines, and before `gtk_init()`. `gemini-wilgat log ...` does not open a window.
+`ciao_output_init()` exits after flags are applied, before the output-system startup lines, and before `gtk_init()`. `cloud-player log ...` does not open a window.
 
 `log N` and `log list N` are not commands. The numbered read is `log show N` only.
 
@@ -52,7 +52,7 @@ The verb is the argument `log`. Flags may sit before it, after it, or between it
 Text is one line per file, `1. <basename>`, then a newline. An empty list prints no lines and exits 0. JSON is one object:
 
 ```json
-{"command":"log","action":"list","folder":"/path","files":[{"number":1,"name":"gemini-wilgat-20261004.log"}]}
+{"command":"log","action":"list","folder":"/path","files":[{"number":1,"name":"cloud-player-20261004.log"}]}
 ```
 
 A missing directory is an empty list, exit 0, and the JSON object still includes `folder`. An unresolved directory exits 1. A path that exists but cannot be read exits 1.
@@ -62,7 +62,7 @@ A missing directory is an empty list, exit 0, and the JSON object still includes
 `N` is the number from the same ordering as `log list`. Text is the raw file bytes, with no added header and no removed character. Enclosure characters such as `[` `]` `<` `>` `(` `)` `{` `}` stay in that text. JSON is one object:
 
 ```json
-{"command":"log","action":"show","number":1,"name":"gemini-wilgat-20261004.log","content":"..."}
+{"command":"log","action":"show","number":1,"name":"cloud-player-20261004.log","content":"..."}
 ```
 
 `content` escapes `\`, `"`, and control characters (`\n`, `\r`, `\t`, and `\u00XX` for other controls). A missing number, `0`, a non-numeric token, or a number past the list exits 1 with `no log file <token>`.
@@ -154,7 +154,7 @@ Future editors must not route this result through `ciao_log`, create the directo
 
 | TP-ID | Pass |
 |-------|------|
-| TP-LOG-COMMANDS | With `HOME` set to an empty temporary directory, `log folder` prints `$HOME/.app/gemini-wilgat/log` and does not create it. `log list` prints nothing and exits 0. After two regular `*.log` files and one non-log file, `log list` numbers the log files in basename order, `log show 1` prints that file unchanged, including `[` `]` `<` `>` `(` `)` `{` `}`, `log show 9` exits 1, and `log clear` deletes only the `*.log` files. `--json` prints one object for list, show, folder, and clear. `log` alone exits 0. The process does not open a window. |
+| TP-LOG-COMMANDS | With `HOME` set to an empty temporary directory, `log folder` prints `$HOME/.app/cloud-player/log` and does not create it. `log list` prints nothing and exits 0. After two regular `*.log` files and one non-log file, `log list` numbers the log files in basename order, `log show 1` prints that file unchanged, including `[` `]` `<` `>` `(` `)` `{` `}`, `log show 9` exits 1, and `log clear` deletes only the `*.log` files. `--json` prints one object for list, show, folder, and clear. `log` alone exits 0. The process does not open a window. |
 | TP-UI-VIEW-APP-LOG | The HTML for one stored line and one other line is one table. The header cells are Time, Pid, Level, Source, and Message. Odd rows are `#ffffff`, even rows are `#e7eef6`, and hover is `#ffe08a`. No cell text contains `[` `]` `<` `>` `(` `)` `{` `}`. The stored line `Milk low (oat)` shows Message `Milk low oat` and Source `output` for component `@output.cpp`. Component `@widget.c` shows Source `widget`. The other line is Message only. `log show` of that file still prints the brackets and the parentheses. The menu loads that HTML into the main web view. |
 
 Map: `docs/reviews/test-plan.md`. The File → Log click path stays with `TP-UI-MENU`, which stays todo until that menu check is run.

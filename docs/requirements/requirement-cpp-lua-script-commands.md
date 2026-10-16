@@ -27,19 +27,19 @@ The menu item and the verb are required behavior. They are in the binary.
 |---------|---------------|----------|
 | File → Lua Script | The menu | The folder, the stored scripts, and New |
 | The New lua script dialog | A filename entry | The name of the file to create |
-| The terminal | `gemini-wilgat luascript ...` | The same actions, with or without `--json` |
+| The terminal | `cloud-player luascript ...` | The same actions, with or without `--json` |
 
 | You do… | What it means | What you type |
 |---------|---------------|---------------|
-| See the folder | The path is shown even when the folder is missing | `gemini-wilgat luascript folder`, or Lua script folder |
-| See the scripts | A 1-based list of the `.lua` files in that folder | `gemini-wilgat luascript list`, or List lua scripts |
-| Read one | The bytes of that file | `gemini-wilgat luascript view 1` |
-| Change one | The menu editor saves the text view, or stdin replaces the file | Edit, then Save, or `gemini-wilgat luascript edit gemini-log.lua` |
-| Create one | The dialog asks for the filename, then opens the new file | File → Lua Script → New lua script, or `gemini-wilgat luascript new gemini-note.lua` |
+| See the folder | The path is shown even when the folder is missing | `cloud-player luascript folder`, or Lua script folder |
+| See the scripts | A 1-based list of the `.lua` files in that folder | `cloud-player luascript list`, or List lua scripts |
+| Read one | The bytes of that file | `cloud-player luascript view 1` |
+| Change one | The menu editor saves the text view, or stdin replaces the file | Edit, then Save, or `cloud-player luascript edit gemini-log.lua` |
+| Create one | The dialog asks for the filename, then opens the new file | File → Lua Script → New lua script, or `cloud-player luascript new gemini-note.lua` |
 
 ## 2. Core rules
 
-The directory is the loader directory from `requirement-cpp-window.md`. For this product the default is `~/.app/gemini-wilgat/userscripts`. When `config.conf` exists, `[scripts] path` replaces that default. The menu reads the path through `config_get_scripts_path()` and `resolve_full_storage_path()` after configuration has loaded. `[scripts] enabled` does not hide the menu and does not reject the verb.
+The directory is the loader directory from `requirement-cpp-window.md`. For this product the default is `~/.app/cloud-player/userscripts`. When `config.conf` exists, `[scripts] path` replaces that default. The menu reads the path through `config_get_scripts_path()` and `resolve_full_storage_path()` after configuration has loaded. `[scripts] enabled` does not hide the menu and does not reject the verb.
 
 A lua script file is a regular file in that directory whose final extension is `.lua`, the same test the loader uses. A name containing `/` is ignored. `.` and `..` are not entries. A symbolic link is not a regular file. Any other name is left in place. The directory itself is not deleted.
 
@@ -47,7 +47,7 @@ Names are sorted by basename ascending, byte order. Numbers start at 1 in that o
 
 The verb is the argument `luascript`. Flags may sit before it, after it, or between it and the action (`--json luascript list`, `luascript list --json`, `luascript --json view 2`). `--config` consumes the next argument. Other arguments that start with `--` are flags, not actions. `--json` and `JSON=1` select one JSON object on stdout for this verb. `--quiet` and `QUIET=1` do not hide the result. The result does not go through `ciao_log` or `ciao_error`, so it is not stored and it does not create the log directory.
 
-`ciao_output_init()` exits after flags are applied, before the output-system startup lines, and before `gtk_init()`. `gemini-wilgat luascript ...` does not open a window.
+`ciao_output_init()` exits after flags are applied, before the output-system startup lines, and before `gtk_init()`. `cloud-player luascript ...` does not open a window.
 
 `luascript N` and `luascript list N` are not commands. The numbered read is `luascript view`. The numbered replace is `luascript edit`.
 
@@ -103,7 +103,7 @@ The menu text view is the editor. The verb does not ask for the script body one 
 
 The dispatch decides once, before any read, whether a prompt is allowed. A prompt is allowed only when standard input and standard output are both terminals and JSON is off. The function that reads the line receives that decision and does not test the terminal itself. The prompt is one line on stderr, `Lua script filename: `, then one line from stdin. The trailing newline is removed. There is no second question.
 
-When a prompt is not allowed, a missing filename exits 1 with `missing lua script filename` and does not read. `gemini-wilgat luascript new gemini-note.lua` does not prompt.
+When a prompt is not allowed, a missing filename exits 1 with `missing lua script filename` and does not read. `cloud-player luascript new gemini-note.lua` does not prompt.
 
 A token with no `.` gains a `.lua` suffix before the check. `gemini-note` is stored as `gemini-note.lua`. A token that contains `.` and does not end in `.lua` is rejected. The stored name must match `^[A-Za-z0-9][A-Za-z0-9._-]*\.lua$`. A slash, an empty name, `.`, `..`, or a name outside that pattern exits 1 with `lua script filename must be a single name`. A name that ends in another extension exits 1 with `lua script filename must end in .lua`.
 
@@ -208,8 +208,8 @@ Opened after New lua script, the view is editable, Save is sensitive, and the bu
 The verb resolves the directory without `config_init()`:
 
 1. `--config <path>` selects that file. A missing file exits 1. A missing path exits 1.
-2. With no `--config`, `$HOME/.app/gemini-wilgat/config.conf` is read when it exists.
-3. When no config file is read, the path is `~/.app/gemini-wilgat/userscripts`.
+2. With no `--config`, `$HOME/.app/cloud-player/config.conf` is read when it exists.
+3. When no config file is read, the path is `~/.app/cloud-player/userscripts`.
 4. The `path` key in `[scripts]` is the directory when a config file is read.
 5. A leading `~/` expands with `HOME`. Any other relative path is joined onto `HOME`, matching `resolve_full_storage_path()`. An absolute path stays absolute.
 6. An unset or empty `HOME` leaves a `~/` path or a relative path unresolved.
@@ -236,8 +236,8 @@ luascript new NAME   Create a lua script
 And these examples:
 
 ```text
-gemini-wilgat luascript folder
-gemini-wilgat luascript new gemini-note.lua
+cloud-player luascript folder
+cloud-player luascript new gemini-note.lua
 ```
 
 ### 2.12 Why this requirement exists
@@ -261,7 +261,7 @@ Future editors must not route this result through `ciao_log` or `ciao_error`, ca
 
 | TP-ID | Pass |
 |-------|------|
-| TP-LUA-SCRIPT-COMMANDS | With `HOME` set to an empty temporary directory, `luascript folder` prints `$HOME/.app/gemini-wilgat/userscripts` and does not create that directory or `config.conf`. `luascript list` prints nothing and exits 0. After two regular `*.lua` files and one non-lua file, `luascript list` numbers the lua files in basename order, `luascript view 1` prints that file, and `luascript view 9` exits 1. `luascript new gemini-note.lua` creates that file with the body in section 2.5, mode `0600`, and creates the directory mode `0700`. A second `luascript new gemini-note.lua` exits 1 and leaves the file unchanged. `luascript new` with standard input not a terminal exits 1 and does not read. `luascript edit` of a listed file with standard input not a terminal replaces the bytes. `luascript edit` with a terminal exits 1 and does not read a body. `--json` prints one object for folder, list, view, edit, and new. `luascript` alone exits 0. The process does not open a window. |
+| TP-LUA-SCRIPT-COMMANDS | With `HOME` set to an empty temporary directory, `luascript folder` prints `$HOME/.app/cloud-player/userscripts` and does not create that directory or `config.conf`. `luascript list` prints nothing and exits 0. After two regular `*.lua` files and one non-lua file, `luascript list` numbers the lua files in basename order, `luascript view 1` prints that file, and `luascript view 9` exits 1. `luascript new gemini-note.lua` creates that file with the body in section 2.5, mode `0600`, and creates the directory mode `0700`. A second `luascript new gemini-note.lua` exits 1 and leaves the file unchanged. `luascript new` with standard input not a terminal exits 1 and does not read. `luascript edit` of a listed file with standard input not a terminal replaces the bytes. `luascript edit` with a terminal exits 1 and does not read a body. `--json` prints one object for folder, list, view, edit, and new. `luascript` alone exits 0. The process does not open a window. |
 
 Map: `docs/reviews/test-plan.md`. The File → Lua Script click path stays with `TP-UI-MENU`, which stays todo until that menu check is run.
 

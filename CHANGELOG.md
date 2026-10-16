@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+## [1.1.0] - 2026-10-16
+
+### Added
+- Open File, beside Reload. It asks for one local file, writes that file's address into the bar, and then does the same thing as Go.
+- README pictures of the cloud-player window and of the local `.mp4` view, including Open File.
+
+### Changed
+- The project name is `cloud-player`. `PROJECT_ID`, `PROJECT_NAME`, the binary, `project_name`, the window title, log file names, and the `~/.app/cloud-player/` and `/var/cloud-player/` directories replace `gemini-wilgat`. Existing data under `~/.app/gemini-wilgat/` is left in place.
+- Product docs now describe cloud-player 1.1.0. The program you run is `cloud-player`. The window title is **cloud-player - Linux Desktop**.
+
 ## [1.0.8] - 2026-10-11
 
 ### Added

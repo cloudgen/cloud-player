@@ -1,11 +1,11 @@
 **file**: docs/requirements/requirement-cpp-milestones.md
 **Status**: Active
-**Updated**: 2026-10-04
+**Updated**: 2026-10-16
 **Philosophy**: CIAO v2.10.2 / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
 
 ## 1. Purpose
 
-This file is the milestone list for gemini-wilgat. It is not a copy of the settings-database requirement.
+This file is the milestone list for cloud-player. It is not a copy of the settings-database requirement.
 
 ### 1.1 Human-facing
 
@@ -24,7 +24,7 @@ This file is the milestone list for gemini-wilgat. It is not a copy of the setti
 | Surface | What you open | What for |
 |---------|---------------|----------|
 | `docs/requirements/index.md` | Status column | Active versus Deferred |
-| The gemini-wilgat window | Milestone 1.0 | What you can run |
+| The cloud-player window | Milestone 1.0 | What you can run |
 
 | You do… | What it means | What you type |
 |---------|---------------|---------------|
@@ -36,18 +36,18 @@ This file is the milestone list for gemini-wilgat. It is not a copy of the setti
 
 In the tree now:
 
-- GTK window, URL bar, user-agent label, WebKit view.
+- GTK window, URL bar (Back, Forward, Reload, Open File, Go), user-agent label, WebKit view.
 - Start page `https://gemini.google.com`.
 - Menu bar owned by `requirement-cpp-ui-menu.md`. The chosen user agent is persisted in `settings.sqlite`.
 - WebUI auto-follow owned by `requirement-cpp-webui-auto-follow.md`. The allow-list is empty.
 - WebUI bookmark list owned by `requirement-cpp-webui-bookmark.md`. One item, Start Page.
-- Cookie file and `config.conf` under `~/.app/gemini-wilgat/`.
+- Cookie file and `config.conf` under `~/.app/cloud-player/`.
 - `ciao_*` output and the flags in the parameters requirement.
-- Lua userscripts from `~/.app/gemini-wilgat/userscripts/`.
+- Lua userscripts from `~/.app/cloud-player/userscripts/`.
 - File → Lua Script and the `luascript` verb, owned by `requirement-cpp-lua-script-commands.md`.
 - Show Version and the unattached About dialog, owned by `requirement-cpp-ui-menu.md`.
 - GStreamer environment and auto-allow permission requests.
-- `./build.sh` verbs `install`, `clean`, and `build`. Binary `target/exe/debug/gemini-wilgat`.
+- `./build.sh` verbs `install`, `clean`, and `build`. Binary `target/exe/debug/cloud-player`.
 - Meson builds the same `src/main/cpp/*.cpp` sources.
 
 ### Milestone 2.0 — config-driven leftovers
@@ -73,5 +73,5 @@ Future editors must not paste the settings schema or the cookie rules into this 
 | `docs/requirements/requirement-cpp-window.md` | Milestone 1.0 behavior |
 | `docs/requirements/requirement-cpp-database.md` | Settings file, not this list |
 
-**Last updated**: 2026-10-04
+**Last updated**: 2026-10-16
 **Owner**: Milestones

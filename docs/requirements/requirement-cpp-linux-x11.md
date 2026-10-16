@@ -13,7 +13,7 @@ This file owns the Linux Desktop runtime: an X11 display, the GDK backend this p
 
 | Box | Meaning | Example |
 |-----|---------|---------|
-| You / this login | The person at a Linux graphical session | You start `gemini-wilgat` |
+| You / this login | The person at a Linux graphical session | You start `cloud-player` |
 | The other role | The process, before GTK starts | It selects the X11 backend when you have not chosen one |
 | Not this file | The names Windows and macOS | `requirement-cpp-desktop.md` |
 
@@ -28,8 +28,8 @@ This file owns the Linux Desktop runtime: an X11 display, the GDK backend this p
 
 | You do… | What it means | What you type |
 |---------|---------------|---------------|
-| Leave the backend unset | The program sets `GDK_BACKEND` to `x11` when `DISPLAY` is set | `gemini-wilgat` |
-| Force another backend | The window does not open | `GDK_BACKEND=wayland gemini-wilgat` |
+| Leave the backend unset | The program sets `GDK_BACKEND` to `x11` when `DISPLAY` is set | `cloud-player` |
+| Force another backend | The window does not open | `GDK_BACKEND=wayland cloud-player` |
 
 ## 2. Core rules
 

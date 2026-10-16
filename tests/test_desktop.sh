@@ -5,7 +5,7 @@ set -u
 
 BIN="${1:-}"
 if [ -z "${BIN}" ]; then
-    echo "usage: $0 /path/to/gemini-wilgat" >&2
+    echo "usage: $0 /path/to/cloud-player" >&2
     exit 2
 fi
 if [ ! -x "${BIN}" ]; then

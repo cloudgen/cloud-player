@@ -5,11 +5,11 @@
 
 ## 1. Purpose
 
-This file owns the simple GCC build, which is the primary way to compile gemini-wilgat. The binary name comes from `PRJ` in `project.ini`.
+This file owns the simple GCC build, which is the primary way to compile cloud-player. The binary name comes from `PRJ` in `project.ini`.
 
 ### 1.1 Human-facing
 
-**In one sentence:** You run `./build.sh build` and the program appears at `target/exe/debug/gemini-wilgat`.
+**In one sentence:** You run `./build.sh build` and the program appears at `target/exe/debug/cloud-player`.
 
 | Box | Meaning | Example |
 |-----|---------|---------|
@@ -24,11 +24,11 @@ This file owns the simple GCC build, which is the primary way to compile gemini-
 | Surface | What you open | What for |
 |---------|---------------|----------|
 | `./build.sh` | Build script | Compile |
-| `target/exe/debug/gemini-wilgat` | Binary | Run |
+| `target/exe/debug/cloud-player` | Binary | Run |
 
 | You do… | What it means | What you type |
 |---------|---------------|---------------|
-| Build and run | Dependencies, then compile, then the binary | `./build.sh install && ./build.sh build && ./target/exe/debug/gemini-wilgat` |
+| Build and run | Dependencies, then compile, then the binary | `./build.sh install && ./build.sh build && ./target/exe/debug/cloud-player` |
 
 ## 2. Core rules
 
@@ -45,9 +45,9 @@ This file owns the simple GCC build, which is the primary way to compile gemini-
 
 `build` compiles every `src/main/cpp/*.cpp` with `g++ -std=c++17`. A `src/main/cpp/*.c` file is compiled with `gcc -std=c11`. The compile adds `-I/usr/local/include` for `<sol/sol.hpp>`. The link line is `g++` when any `.cpp` file is present, and `gcc` when the directory contains only `.c` files.
 
-The output path is `${BUILD_DEBUG}/${PRJ}`. With the current `project.ini` that is `target/exe/debug/gemini-wilgat`. Object files go under `target/exe/debug/obj/`. libmpv is linked from `third_party/libmpv/usr/lib/` plus the host multiarch name from `gcc -print-multiarch`. Sourcing `project.sh` exports paths and does not install packages. Running `project.sh` as a program does.
+The output path is `${BUILD_DEBUG}/${PRJ}`. With the current `project.ini` that is `target/exe/debug/cloud-player`. Object files go under `target/exe/debug/obj/`. libmpv is linked from `third_party/libmpv/usr/lib/` plus the host multiarch name from `gcc -print-multiarch`. Sourcing `project.sh` exports paths and does not install packages. Running `project.sh` as a program does.
 
-`install` may call `sudo apt` for host packages. The package names are the apt set in `requirement-cpp-dependencies.md`. The gemini-wilgat window does not call `sudo`.
+`install` may call `sudo apt` for host packages. The package names are the apt set in `requirement-cpp-dependencies.md`. The cloud-player window does not call `sudo`.
 
 ## 3. Protection rule
 
@@ -60,7 +60,7 @@ Future editors must not document `target/exe/debug/r2webpad` as this binary, or 
 | `docs/requirements/index.md` | Registry |
 | `docs/requirements/requirement-cpp-skills-installation-meson.md` | Second build |
 | `build.sh` | Implementation |
-| `project.ini` | `PRJ=gemini-wilgat` |
+| `project.ini` | `PRJ=cloud-player` |
 | `docs/requirements/requirement-cpp-lua-script.md` | Binding the sol2 headers serve |
 | `docs/requirements/requirement-cpp-dependencies.md` | Apt packages and the pkg-config set |
 

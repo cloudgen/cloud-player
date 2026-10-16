@@ -28,8 +28,8 @@ This file owns the macOS identity. The shared decision is `requirement-cpp-deskt
 
 | You do… | What it means | What you type |
 |---------|---------------|---------------|
-| Name macOS from this Linux build | The check does not look at your display | `gemini-wilgat desktopcheck --os macos` |
-| Ask for JSON | One object whose desktop field is `macos` | `gemini-wilgat --json desktopcheck --os macos` |
+| Name macOS from this Linux build | The check does not look at your display | `cloud-player desktopcheck --os macos` |
+| Ask for JSON | One object whose desktop field is `macos` | `cloud-player --json desktopcheck --os macos` |
 
 ## 2. Core rules
 
@@ -44,9 +44,9 @@ This file owns the macOS identity. The shared decision is `requirement-cpp-deskt
 There is no `.app` bundle, no Xcode project, and no Cocoa or macOS WebKit target in this tree. The Linux binary proves the branch with `desktopcheck`. A future macOS port would still use the same token and would still refuse this GTK window.
 
 ```text
-gemini-wilgat desktopcheck --os macos
-gemini-wilgat desktopcheck --os macos --display :0 --gdk-backend x11
-gemini-wilgat --json desktopcheck --os macos
+cloud-player desktopcheck --os macos
+cloud-player desktopcheck --os macos --display :0 --gdk-backend x11
+cloud-player --json desktopcheck --os macos
 ```
 
 The third command prints `{"desktop":"macos","label":"macOS"}`.

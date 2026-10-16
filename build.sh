@@ -1,6 +1,6 @@
 #!/bin/bash
 # =========================================================================
-# build.sh - Build Script for gemini-wilgat
+# build.sh - Build Script for cloud-player
 # Minimal change: Sources project.sh as Single Source of Truth + safe fallbacks
 # =========================================================================
 
